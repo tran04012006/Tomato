@@ -18,24 +18,27 @@ function InputField({ label, type, id, placeholder }) {
 function App() {
   return (
     <>
-      <div id="acount_dialog">
-        <h2>Welcome, homie.</h2>
+      <div id="header">
+        <div id="tomato_art"></div>
+        <div id="acount_dialog">
+          <h2>Welcome, homie.</h2>
 
-        <div id="account_form">
-          <InputField
-            label="Username"
-            type="text"
-            id="userName"
-            placeholder="What should we call you?"
-          />
-          <InputField
-            label="Password"
-            type="password"
-            id="userPassword"
-            placeholder="Enter your password"
-          />
+          <div id="account_form">
+            <InputField
+              label="Username"
+              type="text"
+              id="userName"
+              placeholder="What should we call you?"
+            />
+            <InputField
+              label="Password"
+              type="password"
+              id="userPassword"
+              placeholder="Enter your password"
+            />
 
-          <button id="submit_btn">Submit</button>
+            <button id="submit_btn">Submit</button>
+          </div>
         </div>
       </div>
     </>
