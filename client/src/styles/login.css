@@ -1,0 +1,57 @@
+:root {
+  --bg: #fff8f5;
+  --card: #ffffff;
+  --surface: #fff1ec;
+  --surface2: #ffe4db;
+  --red: #d4453a;
+  --red-hover: #bf3a30;
+  --red-light: rgba(212, 69, 58, 0.1);
+  --red-border: rgba(212, 69, 58, 0.18);
+  --green: #4a8c52;
+  --green-light: rgba(74, 140, 82, 0.12);
+  --text: #2c1a17;
+  --text-sub: #6b3d36;
+  --text-muted: #9e6b63;
+  --text-dim: #c4a09a;
+  --border: rgba(212, 69, 58, 0.14);
+  --border-dim: rgba(212, 69, 58, 0.08);
+  --shadow: 0 4px 24px rgba(180, 60, 50, 0.1);
+}
+
+#acount_dialog {
+  background-color: var(--surface2);
+  width: min(420px, calc(100% - 32px));
+  height: calc(100dvh - 100px);
+  margin: auto;
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+  padding: 28px;
+  border: 1px solid var(--border);
+}
+
+#account_form {
+  /* background-color: #4a8c52; */
+  box-sizing: border-box;
+  width: 362px;
+  height: 210px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.userInfo {
+  width: 362px;
+  height: 65px;
+}
+
+.userInput {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  background-color: var(--surface);
+  border: 1.5px solid var(--border);
+  font-family: "Nunito", sans-serif;
+  font-size: 13px;
+  color: var(--text);
+}
