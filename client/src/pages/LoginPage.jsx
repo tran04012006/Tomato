@@ -19,7 +19,6 @@ function App() {
   return (
     <>
       <div id="header">
-        <div id="tomato_art"></div>
         <div id="acount_dialog">
           <h2>Welcome, homie.</h2>
 
@@ -39,6 +38,11 @@ function App() {
 
             <button id="submit_btn">Submit</button>
           </div>
+        </div>
+        <div id="tomato_art">
+          <svg>
+            
+          </svg>
         </div>
       </div>
     </>

@@ -30,15 +30,13 @@
   display: flex;
   flex-direction: column;
   justify-self: center;
-  margin-top: 100px;
-  margin-left: 100px;
 }
 
 #account_form {
   /* background-color: #4a8c52; */
   box-sizing: border-box;
   width: 362px;
-  height: 210px;
+  /* height: 210px; */
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -63,11 +61,12 @@
 }
 
 #submit_btn {
+  font-size: inherit;
   margin: auto;
   width: 338px;
-  height: 19px;
+  /* height: 60px; */
   background-color: var(--red);
-  padding: 20px;
+  padding: 10px;
   border-radius: 14px;
   color: white;
   font-family: inherit;
@@ -81,9 +80,31 @@
 #header {
   display: flex;
   flex-direction: row;
-  background-color: #4a8c52;
-  width: 100dvw;
-  height: 100dvh;
+  /* background-color: #4a8c52; */
+  /* width: 100dvw; */
+  /* height: 100dvh; */
   margin: 0;
-  background-color: var(--card);
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  gap: 250px;
+  margin-top: 100px;
 }
+
+#tomato_art {
+  background-color: #4a8c52;
+  width: min(420px, calc(100% - 32px));
+  height: calc(100dvh - 300px);
+}
+
+#tomato_art > svg{
+  width: 100%;
+}
+
+#acount_dialog h2{
+  box-sizing: border-box;
+  font-size: 36px;
+  margin: 15px 0;
+  text-align: center;
+}
+
