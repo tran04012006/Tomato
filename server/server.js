@@ -1,30 +1,31 @@
-import 'dotenv/config';
-import http from 'http';
-import { Server } from 'socket.io';
-import mongoose from 'mongoose';
-import app from './src/app.js';
-import { registerSocket } from './src/socket/index.js';
+import express from "express";
+import mongoose from "mongoose";
+import indexRoute from "./src/routes/index.route.js";
+import register from "./src/routes/auth.route.js";
+import dotenv from "dotenv";
+import cors from "cors";
 
-const { PORT = 5000, MONGO_URI, JWT_SECRET, CLIENT_ORIGIN = 'http://localhost:5173' } = process.env;
-
-if (!MONGO_URI || !JWT_SECRET) {
-  console.error('Thiếu MONGO_URI hoặc JWT_SECRET. Hãy copy .env.example thành .env và điền giá trị.');
-  process.exit(1);
-}
-
-const server = http.createServer(app);
-const io = new Server(server, {
-  cors: { origin: CLIENT_ORIGIN, credentials: true },
-});
-registerSocket(io);
-
+const app = express();
+dotenv.config();
+const port = process.env.PORT;
+// Kết nối MongoDB
 mongoose
-  .connect(MONGO_URI)
-  .then(() => {
-    console.log('MongoDB connected');
-    server.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
-  })
-  .catch((err) => {
-    console.error('MongoDB connection error:', err.message);
-    process.exit(1);
-  });
+  .connect("mongodb://127.0.0.1:27017/UserInformation")
+  .then(() => console.log("MongoDB connected"))
+  .catch((err) => console.log("MongoDB error:", err));
+
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+  }),
+);
+
+app.use(express.json());
+
+app.use("/", indexRoute);
+app.use("/Register", register);
+
+// Khởi động server
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
+});
