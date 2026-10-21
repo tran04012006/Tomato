@@ -1,0 +1,23 @@
+.t {
+  font-size: 13px;
+  display: inline;
+}
+
+#authSwitch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+#linkText {
+  color: var(--red);
+  font-weight: 1000;
+  text-decoration: none;
+}
+
+#linkText:hover {
+  color: var(--red);
+  font-weight: 1000;
+  text-decoration: underline;
+}
