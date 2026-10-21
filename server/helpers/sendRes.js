@@ -1,6 +1,4 @@
 const sendRes = (res, statusCode, message, data) => {
-  console.log("dang o sendRes + " + statusCode);
-
   let success = false;
   if (statusCode >= 200 && statusCode < 300) success = true;
   return res.status(statusCode).json({

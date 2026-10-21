@@ -8,7 +8,7 @@ export const registerValidate = (req, res, next) => {
     sendRes(res, 400, "Please fill out all fields", null);
     return;
   }
-
+  //neu password ko hop le
   if (password.length < 6) {
     sendRes(res, 400, "Password has to contain at least 6 characters", null);
     return;
