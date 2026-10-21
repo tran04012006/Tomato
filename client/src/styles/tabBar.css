@@ -1,0 +1,29 @@
+.tabs {
+      display: flex;
+      background: var(--surface);
+      border-bottom: 1.5px solid var(--border-dim);
+      padding: 6px 6px 0;
+      gap: 2px;
+    }
+    .tab-btn {
+      flex: 1;
+      padding: 10px 8px;
+      background: none;
+      border: none;
+      border-radius: 14px 14px 0 0;
+      color: var(--text-muted);
+      font-family: 'Nunito', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .tab-btn:hover { color: var(--red); background: rgba(212,69,58,0.05); }
+    .tab-btn.active {
+      background: var(--card);
+      color: var(--red);
+      border: 1.5px solid var(--border-dim);
+      border-bottom: 1.5px solid var(--card);
+      margin-bottom: -1.5px;
+    }
+    .tab-btn .icon { margin-right: 4px; }
