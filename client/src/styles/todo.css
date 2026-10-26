@@ -1,0 +1,79 @@
+.progress-row { display: flex; align-items: center; gap: 10px; }
+    .progress-track {
+      flex: 1; height: 8px;
+      background: var(--surface2);
+      border-radius: 999px; overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--red), #e8665d);
+      border-radius: 999px;
+      transition: width 0.5s ease;
+    }
+    .progress-label {
+      font-size: 12px; color: var(--text-muted); font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .todo-input-row { display: flex; gap: 8px; }
+    .todo-input {
+      flex: 1;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 10px 16px;
+      font-family: 'Nunito', sans-serif; font-size: 13px; font-weight: 600;
+      color: var(--text); outline: none; transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .todo-input::placeholder { color: var(--text-dim); }
+    .todo-input:focus { border-color: var(--red); box-shadow: 0 0 0 3px rgba(212,69,58,0.1); }
+
+    .btn-red {
+      padding: 10px 18px;
+      background: var(--red); color: #fff;
+      border: none; border-radius: 14px;
+      font-family: 'Nunito', sans-serif; font-size: 13px; font-weight: 700;
+      cursor: pointer; transition: all 0.15s; white-space: nowrap;
+      box-shadow: 0 3px 10px rgba(212,69,58,0.3);
+    }
+    .btn-red:hover { background: var(--red-hover); }
+    .btn-red:active { transform: scale(0.96); }
+
+    .filter-row {
+      display: flex; gap: 6px;
+    }
+    .filter-btn {
+      padding: 6px 14px; background: none;
+      border: 1.5px solid var(--border-dim);
+      border-radius: 999px;
+      font-family: 'Nunito', sans-serif; font-size: 12px; font-weight: 700;
+      color: var(--text-muted); cursor: pointer;
+      text-transform: capitalize; transition: all 0.2s;
+    }
+    .filter-btn:hover { border-color: var(--red); color: var(--red); }
+    .filter-btn.active { background: var(--red); color: #fff; border-color: var(--red); }
+
+    .todo-list { display: flex; flex-direction: column; gap: 6px; min-height: 40px; }
+    .todo-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 14px;
+      background: var(--surface); border: 1.5px solid var(--border-dim);
+      border-radius: 14px; transition: all 0.2s;
+      animation: popIn 0.22s cubic-bezier(0.34,1.56,0.64,1) forwards;
+    }
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.96) translateY(4px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .todo-item:hover { border-color: var(--red-border); background: var(--card); box-shadow: var(--shadow); }
+    .todo-item:hover .del-btn { opacity: 1; }
+    .todo-check { width: 15px; height: 15px; accent-color: var(--red); cursor: pointer; flex-shrink: 0; }
+    .todo-text { flex: 1; font-size: 13px; line-height: 1.5; color: var(--text); font-weight: 600; }
+    .todo-text.done { text-decoration: line-through; color: var(--text-dim); }
+    .todo-date { font-size: 10px; color: var(--text-dim); flex-shrink: 0; font-weight: 700; }
+    .del-btn { background: none; border: none; color: var(--text-dim); cursor: pointer; font-size: 11px; opacity: 0; transition: all 0.15s; }
+    .del-btn:hover { color: var(--red); }
+    .todo-empty {
+      text-align: center; font-size: 32px; padding: 20px 0;
+    }
+    .todo-empty p { font-size: 13px; color: var(--text-dim); font-weight: 600; margin-top: 4px; }
