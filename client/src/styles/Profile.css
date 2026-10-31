@@ -1,0 +1,121 @@
+#root {
+  min-height: 100vh;
+  /* border: 2px solid green; */
+}
+
+#profile_card {
+  width: min(860px, 100%);
+  border: 1.5px solid var(--border);
+  height: 100vh;
+  margin: 20px 20px;
+  background: white;
+  border-radius: 28px;
+  box-shadow:
+    var(--shadow),
+    0 14px 50px rgba(145, 48, 40, 0.08);
+}
+
+#profile_cover {
+  height: 120px;
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+  padding: 28px 32px;
+  position: relative;
+
+  background:
+    radial-gradient(
+      circle at 86% 18%,
+      rgba(255, 255, 255, 0.18) 0 9%,
+      transparent 9.5%
+    ),
+    radial-gradient(
+      circle at 76% 76%,
+      rgba(255, 255, 255, 0.1) 0 16%,
+      transparent 16.5%
+    ),
+    linear-gradient(135deg, #df5a4e, #c63d34);
+}
+
+#profile_cover::after {
+  content: "🌿";
+  position: absolute;
+  right: 33px;
+  bottom: -17px;
+  font-size: 96px;
+  opacity: 0.3;
+}
+
+#profile_identity {
+  display: flex;
+  position: relative;
+  gap: 18px;
+  margin-top: -40px;
+  margin-left: 30px;
+  align-items: center;
+}
+
+#profile_avatar {
+  width: 96px;
+  height: 96px;
+  background-color: green;
+  border: 6px solid white;
+  border-radius: 28px;
+  background: var(--surface2);
+  color: var(--red);
+  box-shadow: 0 8px 24px rgba(105, 34, 28, 0.14);
+  font-family: "Baloo 2", cursive;
+  font-size: 29px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#profile_name {
+  padding-top: 25px;
+}
+
+#profile_name strong {
+  color: var(--text);
+  font-family: "Baloo 2", cursive;
+  font-size: 23px;
+  line-height: 1.2;
+  display: block;
+}
+
+#profile_name span {
+  color: var(--text-muted);
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#profile_edit_button {
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  border: 1px solid var(--red);
+  background: var(--red);
+  color: white;
+}
+
+#profile_edit_button:hover {
+  background: var(--red-hover);
+  border-color: var(--red-hover);
+}
+
+#profile_edit_form {
+  background: var(--surface);
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  padding: 19px;
+  margin-top: 18px;
+}
+
+#profile_edit_heading {
+  color: var(--text);
+  font-size: 18px;
+  font-weight: 800;
+}
