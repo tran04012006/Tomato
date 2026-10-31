@@ -1,0 +1,32 @@
+#user_button {
+  height: 39;
+  display: flex;
+  align-items: center;
+  color: var(--text-sub);
+  background: var(--surface);
+  padding: 5px 11px 5px 5px;
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  cursor: pointer;
+  gap: 9px;
+  font-weight: 800;
+  font-size: 12px;
+}
+
+#user_button:hover {
+  border-color: var(--red-border);
+  background: white;
+}
+
+#user_button_avatar {
+  width: 29px;
+  height: 29px;
+  border-radius: 9px;
+  background: var(--red);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 11px;
+  font-weight: 800;
+}
