@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import generateRandomString from "../../helpers/generate.js";
-
+//tao schema
 const userSchema = new mongoose.Schema(
   {
     username: String,

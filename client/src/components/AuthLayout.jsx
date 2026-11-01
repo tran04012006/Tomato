@@ -33,16 +33,33 @@ const AuthLayout = (props) => {
                 required
               />
             )}
+            {(props.login === true ||
+              props.register === true ||
+              props.forgotPassword_step1 == true) && (
+              <InputField
+                label="Email"
+                type="email"
+                id="email"
+                placeholder="Your email"
+                onChange={(e) => props.setEmail(e.target.value)}
+                required
+              />
+            )}
 
-            <InputField
-              label="Email"
-              type="email"
-              id="email"
-              placeholder="Your email"
-              onChange={(e) => props.setEmail(e.target.value)}
-              required
-            />
-            {props.forgotPassword === false && (
+            {props.forgotPassword_step2 === true && (
+              <InputField
+                label="OTP"
+                type="text"
+                id="otp"
+                placeholder="OTP was sent to your email"
+                onChange={(e) => props.setOtp(e.target.value)}
+                required
+              />
+            )}
+
+            {(props.forgotPassword_step2 === true ||
+              props.login === true ||
+              props.register === true) && (
               <InputField
                 label="Password"
                 type="password"
@@ -59,7 +76,7 @@ const AuthLayout = (props) => {
               Forgot password?
             </Link>
           )}
-          <button id="registerBtn" onClick={props.handleRegister}>
+          <button id="registerBtn" onClick={props.handle}>
             {props.submit_content}
           </button>
           <AuthSwitch
