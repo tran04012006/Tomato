@@ -23,7 +23,7 @@ const App = () => {
       />{" "}
       <Route
         path="/"
-        element={user ? <MainPage /> : <Navigate to="/auth/login" replace />}
+        element={user ? <MainPage /> : <Navigate to="/auth/register" replace />}
       />
     </Routes>
   );

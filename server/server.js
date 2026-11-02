@@ -11,18 +11,22 @@ import { swaggerUi, swaggerSpec } from "./src/config/swagger.js";
 const app = express();
 dotenv.config();
 const port = process.env.PORT;
-// Kết nối MongoDB
-mongoose
-  .connect("mongodb://127.0.0.1:27017/UserInformation")
-  .then(() => console.log("MongoDB connected"))
-  .catch((err) => console.log("MongoDB error:", err));
-
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: process.env.CLIENT_ORIGIN || "http://localhost:5173",
     credentials: true,
   }),
 );
+// Kết nối MongoDB
+console.log("MONGO_URI loaded:", Boolean(process.env.MONGO_URI));
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => {
+    console.log("MongoDB Atlas connected");
+  })
+  .catch((error) => {
+    console.error("MongoDB connection failed:", error.message);
+  });
 
 app.use(express.json());
 app.use(cookieParser());
