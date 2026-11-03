@@ -8,13 +8,13 @@ function AuthSwitch(props) {
       <div className="t text">
         {props.text}
         {props.linkText === "Sign in." && (
-          <Link to="auth/login" id="linkText">
+          <Link to="/auth/login" id="linkText">
             {props.linkText}
           </Link>
         )}
 
         {props.linkText === "Create an account." && (
-          <Link to="/" id="linkText">
+          <Link to="/auth/register" id="linkText">
             {props.linkText}
           </Link>
         )}
