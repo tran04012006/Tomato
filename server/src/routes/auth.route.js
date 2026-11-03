@@ -50,18 +50,14 @@ import sendRes from "../../helpers/sendRes.js";
  *       500:
  *         description: Internal server error
  */
+const router = express.Router();
 
 router.post("/login", loginValidate, loginController);
-import getUser from "../middleware/getUser.middleware.js";
-const router = express.Router();
-import sendRes from "../../helpers/sendRes.js";
-
 
 router.get("/me", getUser, (req, res) => {
   sendRes(res, 200, "Authenticated", { user: res.locals.user });
 });
 
 router.post("/register", registerValidate, registerPostController);
-
 
 export default router;
