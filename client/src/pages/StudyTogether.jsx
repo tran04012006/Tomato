@@ -1,12 +1,15 @@
 import { useState } from "react";
 import "../styles/study.css";
-import NameBar from "../pages/study/NameBar";
-import RoomPicker from "../pages/study/PickRoom";
+import NameBar from "./study/NameBar";
+import RoomPicker from "./study/PickRoom";
+import Room from "./study/Room";
+
 
 export default function StudyTogether() {
   const [name, setName] = useState("");
   const [showHint, setShowHint] = useState(false);
   const [roomId, setRoomId] = useState(null);
+  const [userId] = useState(() => crypto.randomUUID());
 
   const handleNameChange = (value) => {
     setName(value);
@@ -18,6 +21,19 @@ export default function StudyTogether() {
     setRoomId(id);
   };
 
+  if (roomId) {
+    return (
+      <div className="panel">
+        <Room
+          roomId={roomId}
+          userId={userId}
+          name={name.trim()}
+          onLeave={() => setRoomId(null)}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="panel">
       <div className="section-label">Choose your study room</div>
@@ -26,7 +42,6 @@ export default function StudyTogether() {
       <div className="study-banner">
         🌱 Tomatoes grow better planted together — and so do you!
       </div>
-      {roomId && <div>Đang ở phòng {roomId}</div>}
     </div>
   );
 }
