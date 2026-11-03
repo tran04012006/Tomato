@@ -1,6 +1,8 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 export const AppContext = createContext({});
+import api from "../api/axios.js";
+
 //children: la nhung component ma no dang boc. Vi du neu AppProvider dang boc header
 // thi children la header
 export const AppProvider = ({ children }) => {
@@ -11,9 +13,7 @@ export const AppProvider = ({ children }) => {
     const checkLogin = async () => {
       console.log("chay AppProvider");
       try {
-        const res = await axios.get("http://localhost:3000/auth/me", {
-          withCredentials: true,
-        });
+        const res = await api.get("/auth/me");
         // console.log("Da lay duoc res: ", res);
         console.log("res.data.data.user: ", res.data.data.user);
         setUser(res.data.data.user);
