@@ -3,6 +3,8 @@ import LoginPage from "../src/pages/LoginPage";
 import MainPage from "./pages/MainPage.jsx";
 import Register from "./pages/RegisterPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+// import Profile from "./pages/Profile.jsx";
+import { Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useApp } from "./Context/AppContext.jsx";
 import { Navigate } from "react-router-dom";
@@ -26,11 +28,14 @@ const App = () => {
         path="/auth/login"
         element={user ? <Navigate to="/" replace /> : <LoginPage />}
       />
-
       {/* main page */}
       <Route
         path="/"
         element={user ? <MainPage /> : <Navigate to="/auth/login" replace />}
+      />
+      <Route
+        path="/"
+        element={user ? <MainPage /> : <Navigate to="/auth/register" replace />}
       />
     </Routes>
   );
