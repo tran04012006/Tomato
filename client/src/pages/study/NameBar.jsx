@@ -1,10 +1,12 @@
 export default function NameBar({ name, onChange, showHint }) {
   return (
     <div className="name-bar">
-      <div className="section-label">Your name</div>
+      <div className={`section-label ${showHint ? "error" : ""}`}>
+        {showHint ? "Please enter your name!" : "Your name"}
+      </div>
       <div className="name-row">
         <input
-          className="chat-input"
+          className={`chat-input ${showHint ? "error" : ""}`}
           type="text"
           placeholder="Enter your name..."
           maxLength={20}
@@ -12,7 +14,6 @@ export default function NameBar({ name, onChange, showHint }) {
           onChange={(e) => onChange(e.target.value)}
         />
       </div>
-      {showHint && <div className="name-hint">Please enter your name!</div>}
     </div>
   );
 }
