@@ -4,7 +4,6 @@ import MainPage from "./pages/MainPage.jsx";
 import Register from "./pages/RegisterPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 // import Profile from "./pages/Profile.jsx";
-import { Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useApp } from "./Context/AppContext.jsx";
 import { Navigate } from "react-router-dom";
