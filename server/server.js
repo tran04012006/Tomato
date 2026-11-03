@@ -17,16 +17,6 @@ app.use(
     credentials: true,
   }),
 );
-// Kết nối MongoDB
-console.log("MONGO_URI loaded:", Boolean(process.env.MONGO_URI));
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => {
-    console.log("MongoDB Atlas connected");
-  })
-  .catch((error) => {
-    console.error("MongoDB connection failed:", error.message);
-  });
 
 app.use(express.json());
 app.use(cookieParser());
@@ -40,10 +30,34 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiJUcmFuIiwiaWF0IjoxNzkzMjA0NjQ1LCJleHAiOjE3OTM4MDk0NDV9.CUSK2hy-5EPofmCSS5Xwb2XriiUZU3nm-kPriOIYCqg",
 // );
 // console.log("decodedData: ", decodedData);
-
+app.get("/api/health", (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: "Tomato backend is running",
+    database:
+      mongoose.connection.readyState === 1 ? "connected" : "disconnected",
+  });
+});
 app.use("/", indexRoute);
 
 // Khởi động server
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
-});
+const startServer = async () => {
+  try {
+    if (!process.env.MONGO_URI) {
+      throw new Error("MONGO_URI is missing");
+    }
+
+    await mongoose.connect(process.env.MONGO_URI);
+
+    console.log("MongoDB connected successfully");
+
+    app.listen(port, () => {
+      console.log(`Server running at http://localhost:${port}`);
+    });
+  } catch (error) {
+    console.error("Failed to start server:", error.message);
+    process.exit(1);
+  }
+};
+
+startServer();

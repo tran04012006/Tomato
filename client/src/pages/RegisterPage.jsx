@@ -1,5 +1,5 @@
 import "../styles/AuthLayout.css";
-import axios from "axios";
+import api from "../api/axios";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import AuthLayout from "../components/AuthLayout";
@@ -18,17 +18,11 @@ function RegisterPage() {
   const handleRegister = async (username, password, email) => {
     console.log("chay handleRegister ");
     try {
-      const res = await axios.post(
-        "http://localhost:3000/auth/register",
-        {
-          username: username,
-          password: password,
-          email: email,
-        },
-        {
-          withCredentials: true,
-        },
-      );
+      const res = await api.post("/auth/register", {
+        username,
+        password,
+        email,
+      });
       console.log(res.data.message);
       setMessage(res.data.message);
 
