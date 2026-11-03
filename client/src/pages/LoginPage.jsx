@@ -1,52 +1,65 @@
-import "../styles/login.css";
+import "../styles/AuthLayout.css";
+import axios from "axios";
+import { useState } from "react";
+import { toast } from "react-toastify";
+import AuthLayout from "../components/AuthLayout";
+import "react-toastify/dist/ReactToastify.css";
+import useNavigation from "../hooks/useNavigation.js";
+import { useApp } from "../Context/AppContext.jsx";
+import api from "../api/axios.js";
 
-function InputField({ label, type, id, placeholder }) {
+function LoginPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+  const { goToMainPage } = useNavigation();
+  const { setUser } = useApp();
+  const { gotoRegisterPage } = useNavigation();
+  const handleLogin = async (email, password) => {
+    try {
+      const res = await api.post("/auth/login", {
+        email,
+        password,
+      });
+      console.log(res.data.message);
+      setMessage(res.data.message);
+
+      if (res.status == 200) {
+        toast.success(res.data.message);
+        console.log(res.data.data.username);
+        setUser(res.data.data);
+        console.log("go to main page");
+        goToMainPage();
+      }
+    } catch (error) {
+      if (
+        error.response?.status == 400 ||
+        error.response?.status == 409 ||
+        error.response?.status == 404 ||
+        error.response?.status == 401
+      )
+        toast.error(error.response?.data?.message);
+      setMessage(error.response?.data?.message);
+    }
+  };
+
   return (
-    <div className="userInfo">
-      <label htmlFor={id}>{label}</label>
-      <br />
-      <input
-        type={type}
-        id={id}
-        placeholder={placeholder}
-        className="userInput"
-      />
-    </div>
+    <AuthLayout
+      login={true}
+      register={false}
+      forgotPassword={false}
+      forgotPassword_step2={false}
+      kicker="Welcome back, bestie! "
+      title="Ready to grow today?"
+      submit_content="Enter my study space"
+      authSwitch_text="New to the garden? "
+      authSwitch_linkText="Create an account."
+      setMessage={setMessage}
+      setPassword={setPassword}
+      setEmail={setEmail}
+      handle={() => handleLogin(email, password)}
+    />
   );
 }
 
-function App() {
-  return (
-    <>
-      <div id="header">
-        <div id="acount_dialog">
-          <h2>Welcome, homie.</h2>
-
-          <div id="account_form">
-            <InputField
-              label="Username"
-              type="text"
-              id="userName"
-              placeholder="What should we call you?"
-            />
-            <InputField
-              label="Password"
-              type="password"
-              id="userPassword"
-              placeholder="Enter your password"
-            />
-
-            <button id="submit_btn">Submit</button>
-          </div>
-        </div>
-        <div id="tomato_art">
-          <svg>
-            
-          </svg>
-        </div>
-      </div>
-    </>
-  );
-}
-
-export default App;
+export default LoginPage;
