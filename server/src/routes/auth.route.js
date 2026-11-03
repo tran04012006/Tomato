@@ -6,9 +6,6 @@ import {
   ForgotPasswordValidate,
   // ForgotPasswordOTPValidate,
 } from "../middleware/userValidate.middleware.js";
-import loginController from "../Controller/loginController.js";
-import ForgotPasswordController from "../Controller/ForgotPasswordController.js";
-import ForgotPasswordOTPController from "../Controller/ForgotPasswordOTPController.js";
 import getUser from "../middleware/getUser.middleware.js";
 const router = express.Router();
 import sendRes from "../../helpers/sendRes.js";
