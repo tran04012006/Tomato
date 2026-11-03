@@ -7,6 +7,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import { createJWT, verifyToken } from "./src/middleware/JWTaction.js";
 import { swaggerUi, swaggerSpec } from "./src/config/swagger.js";
+// import { swaggerUi, swaggerSpec } from "./src/config/swagger.js";
 
 const app = express();
 dotenv.config();
@@ -18,8 +19,18 @@ app.use(
   }),
 );
 
-app.use(express.json());
+app.use(express.json({ limit: "10mb" }));
 app.use(cookieParser());
+
+// Swagger Documentation
+// app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+// //test jwt
+// // createJWT("Tran");
+// const decodedData = verifyToken(
+//   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiJUcmFuIiwiaWF0IjoxNzkzMjA0NjQ1LCJleHAiOjE3OTM4MDk0NDV9.CUSK2hy-5EPofmCSS5Xwb2XriiUZU3nm-kPriOIYCqg",
+// );
+// console.log("decodedData: ", decodedData);
 
 // Swagger Documentation
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
