@@ -9,11 +9,13 @@ export const AppProvider = ({ children }) => {
 
   useEffect(() => {
     const checkLogin = async () => {
+      console.log("chay AppProvider");
       try {
         const res = await axios.get("http://localhost:3000/auth/me", {
           withCredentials: true,
         });
-        console.log("Da lay duoc res: ", res);
+        // console.log("Da lay duoc res: ", res);
+        console.log("res.data.data.user: ", res.data.data.user);
         setUser(res.data.data.user);
       } catch (error) {
         setUser(null);
