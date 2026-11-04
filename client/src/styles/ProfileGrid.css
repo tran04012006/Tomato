@@ -1,0 +1,45 @@
+#profile_grid {
+  display: grid;
+  /* chia phan tu con thanh 3 cot bang nhau */
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 29px;
+  align-items: center;
+  justify-items: center;
+}
+
+#profile_stat_card {
+  min-height: 112px;
+  padding: 17px;
+  border: 1px solid var(--border-dim);
+  border-radius: 17px;
+
+  background: var(--surface);
+}
+
+#profile_stat_icon {
+  width: 31px;
+  height: 31px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 12px;
+  border-radius: 9px;
+  background: white;
+
+  box-shadow: 0 3px 10px rgba(155, 57, 48, 0.08);
+}
+
+#profile_stat_card {
+  display: block;
+  color: var(--text);
+
+  font-family: "Baloo 2", cursive;
+  font-size: 24px;
+  line-height: 1;
+}
+
+#profile_stat_card span {
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 700;
+}
