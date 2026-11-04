@@ -3,13 +3,14 @@ import registerPostController from "../Controller/registerPostController.js";
 import {
   registerValidate,
   loginValidate,
-  ForgotPasswordValidate,
-  // ForgotPasswordOTPValidate,
 } from "../middleware/userValidate.middleware.js";
 import loginController from "../Controller/loginController.js";
 import getUser from "../middleware/getUser.middleware.js";
 const router = express.Router();
 import sendRes from "../../helpers/sendRes.js";
+import updateProfileController from "../Controller/updateProfileController.js";
+import changePasswordController from "../Controller/changePasswordController.js";
+
 /**
  * @openapi
  * /users/me:
@@ -52,6 +53,21 @@ import sendRes from "../../helpers/sendRes.js";
  *         description: Internal server error
  */
 
+router.post("/logout", (req, res) => {
+  res.clearCookie("tokenUser", {
+    httpOnly: true,
+    sameSite: "lax",
+    secure: false,
+    path: "/",
+  });
+
+  return res.status(200).json({
+    message: "Logged out successfully",
+  });
+});
+
+router.put("/profile", getUser, updateProfileController);
+
 router.post("/login", loginValidate, loginController);
 
 router.get("/me", getUser, (req, res) => {
@@ -59,5 +75,21 @@ router.get("/me", getUser, (req, res) => {
 });
 
 router.post("/register", registerValidate, registerPostController);
+
+// router.post("/login", loginController);
+
+// router.post(
+//   "/forgot_password/email",
+//   ForgotPasswordValidate,
+//   ForgotPasswordController,
+// );
+
+router.put("/change_password", getUser, changePasswordController);
+
+// router.post(
+//   "/forgot_password/otp",
+//   ForgotPasswordOTPValidate,
+//   ForgotPasswordOTPController,
+// );
 
 export default router;

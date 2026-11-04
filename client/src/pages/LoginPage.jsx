@@ -46,6 +46,11 @@ function LoginPage() {
       )
         toast.error(error.response?.data?.message);
       setMessage(error.response?.data?.message);
+
+      if (error.response?.status == 401) {
+        console.log("dieu huong sang register");
+        gotoRegisterPage();
+      }
     }
   };
 

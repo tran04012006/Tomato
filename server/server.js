@@ -6,7 +6,10 @@ import dotenv from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import { createJWT, verifyToken } from "./src/middleware/JWTaction.js";
+<<<<<<< HEAD
 import { swaggerUi, swaggerSpec } from "./src/config/swagger.js";
+=======
+>>>>>>> feature/profile
 // import { swaggerUi, swaggerSpec } from "./src/config/swagger.js";
 
 const app = express();
