@@ -6,6 +6,7 @@ import AuthLayout from "../components/AuthLayout";
 import "react-toastify/dist/ReactToastify.css";
 import useNavigation from "../hooks/useNavigation.js";
 import { useApp } from "../Context/AppContext.jsx";
+import api from "../api/axios.js";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
@@ -16,16 +17,10 @@ function LoginPage() {
   const { gotoRegisterPage } = useNavigation();
   const handleLogin = async (email, password) => {
     try {
-      const res = await axios.post(
-        "http://localhost:3000/auth/login",
-        {
-          email: email,
-          password: password,
-        },
-        {
-          withCredentials: true,
-        },
-      );
+      const res = await api.post("/auth/login", {
+        email,
+        password,
+      });
       console.log(res.data.message);
       setMessage(res.data.message);
 

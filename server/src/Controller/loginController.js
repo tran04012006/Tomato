@@ -15,7 +15,7 @@ const loginController = async (req, res) => {
     return sendRes(
       res,
       401,
-      "You haven't registered yet. Please register",
+      "You haven't registered yet. Please create an account!",
       null,
     );
   } else {

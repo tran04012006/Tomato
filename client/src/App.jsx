@@ -27,14 +27,16 @@ const App = () => {
         path="/auth/login"
         element={user ? <Navigate to="/" replace /> : <LoginPage />}
       />
-      {/* forgot password */}
-      {/* <Route path="/forgot_password" element={<ForgotPassword />} /> */}
       {/* main page */}
       <Route
         path="/"
         element={user ? <MainPage /> : <Navigate to="/auth/login" replace />}
       />
       <Route path="/profile" element={<Profile />} />
+      <Route
+        path="/"
+        element={user ? <MainPage /> : <Navigate to="/auth/register" replace />}
+      />
     </Routes>
   );
 };
