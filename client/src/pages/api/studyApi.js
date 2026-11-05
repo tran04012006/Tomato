@@ -5,5 +5,6 @@ export const getRooms = () =>
     ...room,
     count: USERS.filter((u) => u.roomId === room.id).length,
   }));;
+  
 export const getUsers = () => USERS;
 export const getMessages = () => MESSAGES;

@@ -4,10 +4,13 @@ import UserList from "./UserList";
 import Chat from "./Chat";
 
 export default function Room({ roomId, userId, name, onLeave }) {
-  const { users, messages, sendMessage } = useRoom(roomId, { id: userId, name });
-  
-  const room = getRooms().find((r) => r.id === roomId);
+  const { users, userCount, messages, sendMessage } = useRoom(roomId, {
+    id: userId,
+    name,
+  });
 
+  const room = getRooms().find((r) => r.id === roomId);
+  console.log("userCount: " + userCount);
   return (
     <>
       <div className="room-header">
@@ -21,7 +24,7 @@ export default function Room({ roomId, userId, name, onLeave }) {
 
         <div className="room-header-right">
           <span className="online-count">
-            {users.length}/{room.capacity} people
+            {userCount}/{room.capacity} people
           </span>
           <button className="leave-btn" onClick={onLeave}>
             Leave

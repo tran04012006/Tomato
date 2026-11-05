@@ -1,4 +1,11 @@
 import { parse } from "cookie";
+const sendRoomCount = (io, roomId) => {
+  const count = io.sockets.adapter.rooms.get(roomId)?.size ?? 0;
+  console.log("cap nhat lai count, count = " + count);
+
+  io.emit("room:count", { roomId, count });
+};
+
 const handleChatSend = (socket, io, { text } = {}) => {
   const roomId = socket.data.roomId;
 
@@ -6,8 +13,7 @@ const handleChatSend = (socket, io, { text } = {}) => {
     .trim()
     .slice(0, 500);
 
-  if (!clean) return;
-
+  if (!roomId || !clean) return;
   const msg = {
     id: `${socket.id}-${Date.now()}`,
     userId: socket.data.user.id,
@@ -22,19 +28,20 @@ const handleChatSend = (socket, io, { text } = {}) => {
   io.to(roomId).emit("chat:message", msg);
 };
 
-const handleRoomLeave = (socket) => {
+const handleRoomLeave = (socket, io) => {
   const roomId = socket.data.roomId;
 
   if (!roomId) return;
 
   socket.leave(roomId);
   socket.data.roomId = null;
+  console.log("user ra khoi rooms");
+  sendRoomCount(io, roomId);
 
   console.log(`${socket.id} left room ${roomId}`);
 };
 
-const handleRoomJoin = (socket, { roomId } = {}) => {
-  console.log("goi handleRoomJoin!!!!!!!!!!");
+const handleRoomJoin = (socket, io, { roomId } = {}) => {
   const VALID_ROOMS = ["r1", "r2", "r3"];
   if (!VALID_ROOMS.includes(roomId)) {
     socket.emit("room:error", "Invalid room");
@@ -43,11 +50,13 @@ const handleRoomJoin = (socket, { roomId } = {}) => {
 
   // Leave previous room, if any
   if (socket.data.roomId) {
-    socket.leave(socket.data.roomId);
+    handleRoomLeave(socket, io);
   }
 
   // tao mo socket.io room co gia tri bang gia tri cua bien roomId
   socket.join(roomId);
+  console.log("User di vao phong, cap nhat lai count");
+  sendRoomCount(io, roomId);
 
   //
   socket.data.roomId = roomId;
@@ -58,40 +67,6 @@ const handleRoomJoin = (socket, { roomId } = {}) => {
 };
 
 export function registerSocket(io) {
-  // io.use(async (socket, next) => {
-  //   try {
-  //     // doc cookie
-  //     const cookies = parse(socket.handshake.headers.cookie || "");
-
-  //     // lay ra userId
-  //     let userId = verifyToken(cookies[COOKIE_NAME]);
-
-  //     if (!userId) {
-  //       userId = "1";
-  //     }
-
-  //     // lay user ra
-  //     let user = await User.findById(userId);
-
-  //     if (!user) {
-  //       user = {
-  //         _id: userId,
-  //         name: "Guest",
-  //       };
-  //     }
-
-  //     socket.data.user = {
-  //       id: String(user._id),
-  //       name: user.name,
-  //     };
-
-  //     next();
-  //   } catch (error) {
-  //     console.error("Socket authentication error:", error);
-  //     next(new Error("unauthorized"));
-  //   }
-  // });
-
   io.on("connection", (socket) => {
     console.log("Client connected:", socket.id);
 
@@ -101,16 +76,43 @@ export function registerSocket(io) {
       name: "Guest",
     };
 
+    // Handle chat
     socket.on("chat:send", (data) => {
       handleChatSend(socket, io, data);
     });
 
+    // Handle joining room
     socket.on("room:join", (data) => {
-      handleRoomJoin(socket, data);
+      handleRoomJoin(socket, io, data);
     });
 
+    // Handle leaving room
     socket.on("room:leave", () => {
-      handleRoomLeave(socket);
+      handleRoomLeave(socket, io);
+    });
+
+    socket.on("rooms:counts:get", () => {
+      const counts = {};
+
+      for (const roomId of ["r1", "r2", "r3"]) {
+        counts[roomId] = io.sockets.adapter.rooms.get(roomId)?.size ?? 0;
+      }
+
+      socket.emit("rooms:counts", counts);
+    });
+
+    // Handle disconnection
+    socket.on("disconnect", () => {
+      const roomId = socket.data.roomId;
+
+      if (roomId) {
+        socket.data.roomId = null;
+
+        // Socket.IO already removed the connection from its rooms
+        sendRoomCount(io, roomId);
+      }
+
+      console.log("Client disconnected:", socket.id);
     });
   });
 }

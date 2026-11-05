@@ -4,7 +4,10 @@ import socket from "../../socket";
 
 export default function useRoom(roomId, user) {
   const [messages, setMessages] = useState([]);
+  //danh sach users
   const [users, setUsers] = useState([]);
+  //so luong user trong moi room
+  const [userCount, setUserCount] = useState(0);
 
   useEffect(() => {
     //---------------handlers
@@ -36,6 +39,12 @@ export default function useRoom(roomId, user) {
       console.error("Room error:", error);
     };
 
+    const handleRoomCount = ({ roomId: updatedRoomId, count }) => {
+      if (updatedRoomId === roomId) {
+        setUserCount(count);
+      }
+    };
+
     //lang nghe su kien cua server
     //server gui ten gi o client se lang nghe dung cai ten do
     //server gui len param gi thi ham handleSocketId se tu dong nhan param do
@@ -44,10 +53,12 @@ export default function useRoom(roomId, user) {
     socket.on("connect", handleConnect);
     socket.on("server_send_socket_id: ", handleSocketId);
     socket.on("chat:message", handleMessage);
-    //if joining room successfully
+    //neu tham gia phong thanh cong
     socket.on("room:joined", handleRoomJoined);
-    //if failing to join room
+    //neu tham gia phong that bai
     socket.on("room:error", handleRoomError);
+    //dem so user trong phong
+    socket.on("room:count", handleRoomCount);
 
     //-------------start the connection
     if (socket.connected) {
@@ -64,12 +75,12 @@ export default function useRoom(roomId, user) {
       socket.off("connect", handleConnect);
       socket.off("room:joined", handleRoomJoined);
       socket.off("room:error", handleRoomError);
+      socket.off("room:count", handleRoomCount);
 
       socket.disconnect();
     };
-  }, []);
+  }, [roomId]);
 
-  const others = getUsers().filter((u) => u.roomId === roomId);
 
   // me là người dùng hiện tại -> thêm vào cuối danh sách
   // users = [
@@ -95,5 +106,10 @@ export default function useRoom(roomId, user) {
     });
   };
 
-  return { users, messages, sendMessage };
+  return {
+    users,
+    userCount,
+    messages,
+    sendMessage,
+  };
 }
