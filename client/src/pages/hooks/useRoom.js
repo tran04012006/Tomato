@@ -7,6 +7,8 @@ export default function useRoom(roomId, user) {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
+    //---------------handlers
+    //message
     const handleMessage = (message) => {
       console.log("Client received:", message);
 
@@ -16,15 +18,52 @@ export default function useRoom(roomId, user) {
     const handleSocketId = (id) => {
       console.log("socket ID in server:", id);
     };
+    //connection
+    const handleConnect = () => {
+      // console.log("chay connection ");
+      // console.log("Connected:", socket.id);
+
+      // Tell server which room to join
+      socket.emit("room:join", { roomId });
+    };
+
+    //room
+    const handleRoomJoined = (data) => {
+      console.log("Successfully joined:", data.roomId);
+    };
+
+    const handleRoomError = (error) => {
+      console.error("Room error:", error);
+    };
+
     //lang nghe su kien cua server
     //server gui ten gi o client se lang nghe dung cai ten do
     //server gui len param gi thi ham handleSocketId se tu dong nhan param do
+    //--------------------
+    //listeners
+    socket.on("connect", handleConnect);
     socket.on("server_send_socket_id: ", handleSocketId);
     socket.on("chat:message", handleMessage);
-    socket.connect();
+    //if joining room successfully
+    socket.on("room:joined", handleRoomJoined);
+    //if failing to join room
+    socket.on("room:error", handleRoomError);
+
+    //-------------start the connection
+    if (socket.connected) {
+      handleConnect();
+    } else {
+      socket.connect();
+    }
+    //---------------return
     return () => {
+      socket.emit("room:leave");
+
       socket.off("server_send_socket_id: ", handleSocketId);
       socket.off("chat:message", handleMessage);
+      socket.off("connect", handleConnect);
+      socket.off("room:joined", handleRoomJoined);
+      socket.off("room:error", handleRoomError);
 
       socket.disconnect();
     };
