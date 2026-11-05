@@ -1,13 +1,37 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const messageSchema = new mongoose.Schema(
   {
-    room: { type: mongoose.Schema.Types.ObjectId, ref: 'Room', required: true, index: true },
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    name: { type: String, required: true },
-    text: { type: String, required: true, maxlength: 500 },
+    roomId: {
+      type: String,
+      required: true,
+      index: true,
+    },
+
+    userId: {
+      type: String,
+      required: true,
+    },
+
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+      maxlength: 20,
+    },
+
+    text: {
+      type: String,
+      required: true,
+      trim: true,
+      maxlength: 500,
+    },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  },
 );
 
-export default mongoose.model('Message', messageSchema);
+messageSchema.index({ roomId: 1, createdAt: -1 });
+
+export default mongoose.model("Message", messageSchema);
