@@ -14,6 +14,8 @@ export default function Chat({ messages, users, currentUserId, onSend }) {
     if (!text.trim()) return;
     onSend(text);
     setText("");
+
+    
   };
 
   const findUser = (id) => users.find((u) => u.id === id);
@@ -29,7 +31,7 @@ export default function Chat({ messages, users, currentUserId, onSend }) {
                 className="chat-user"
                 style={{ color: user?.color || "var(--text)" }}
               >
-                {m.userId === currentUserId ? "You" : user?.name || "?"}:
+                {m.userId === currentUserId ? "You" : user?.name || "Guest"}:
               </span>
               <span className="chat-text">{m.text}</span>
             </div>

@@ -5,6 +5,7 @@ import Chat from "./Chat";
 
 export default function Room({ roomId, userId, name, onLeave }) {
   const { users, messages, sendMessage } = useRoom(roomId, { id: userId, name });
+  
   const room = getRooms().find((r) => r.id === roomId);
 
   return (
