@@ -12,10 +12,40 @@ export default function useRoom(roomId, user) {
   useEffect(() => {
     //---------------handlers
     //message
-    const handleMessage = (message) => {
-      console.log("Client received:", message);
+    //merge tin nhan cu va moi lai
+    const mergeMessages = (incoming) => {
+      console.log(
+        "Message IDs:",
+        incoming.map((m) => ({
+          id: m.id,
+          _id: m._id,
+          text: m.text,
+        })),
+      );
+      setMessages((previous) => {
+        const unique = new Map();
+        for (const message of previous) {
+          unique.set(message._id, message);
+        }
 
-      setMessages((prev) => [...prev, message]);
+        for (const message of incoming) {
+          unique.set(message._id, message);
+        }
+        // console.log("after merging");
+        // console.log("merge message: ", unique);
+
+        return [...unique.values()].sort((a, b) => {
+          const timeDiff =
+            new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+          return timeDiff || String(a.id).localeCompare(String(b.id));
+        });
+      });
+    };
+
+    const handleMessage = (message) => {
+      if (message.roomId !== roomId) return;
+
+      let mergedMessages = mergeMessages([message]);
     };
 
     const handleSocketId = (id) => {
@@ -25,12 +55,11 @@ export default function useRoom(roomId, user) {
     const handleConnect = () => {
       // console.log("chay connection ");
       // console.log("Connected:", socket.id);
-
-      // Tell server which room to join
       socket.emit("room:join", { roomId });
     };
 
     //room
+    //server se confirm la vo thanh cong
     const handleRoomJoined = (data) => {
       console.log("Successfully joined:", data.roomId);
     };
@@ -43,6 +72,13 @@ export default function useRoom(roomId, user) {
       if (updatedRoomId === roomId) {
         setUserCount(count);
       }
+    };
+
+    const handleRoomHistory = (data) => {
+      // console.log("client receive message: ", data);
+      if (data.roomId !== roomId) return;
+
+      mergeMessages(data.messages);
     };
 
     //lang nghe su kien cua server
@@ -59,6 +95,7 @@ export default function useRoom(roomId, user) {
     socket.on("room:error", handleRoomError);
     //dem so user trong phong
     socket.on("room:count", handleRoomCount);
+    socket.on("room:history", handleRoomHistory);
 
     //-------------start the connection
     if (socket.connected) {
@@ -76,11 +113,10 @@ export default function useRoom(roomId, user) {
       socket.off("room:joined", handleRoomJoined);
       socket.off("room:error", handleRoomError);
       socket.off("room:count", handleRoomCount);
-
+      socket.off("room:history", handleRoomHistory);
       socket.disconnect();
     };
   }, [roomId]);
-
 
   // me là người dùng hiện tại -> thêm vào cuối danh sách
   // users = [
