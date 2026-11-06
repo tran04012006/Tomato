@@ -37,7 +37,7 @@ const handleChatSend = async (socket, io, { text } = {}) => {
     // console.log("savedMessage: ", savedMessage);
     //store roi moi gui message
     io.to(roomId).emit("chat:message", {
-      id: String(savedMessage._id),
+      _id: String(savedMessage._id),
       roomId: savedMessage.roomId,
       userId: savedMessage.userId,
       name: savedMessage.name,
