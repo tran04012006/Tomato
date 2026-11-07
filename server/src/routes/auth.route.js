@@ -51,7 +51,6 @@ import sendRes from "../../helpers/sendRes.js";
  *         description: Internal server error
  */
 const router = express.Router();
-import sendRes from "../../helpers/sendRes.js";
 import updateProfileController from "../Controller/updateProfileController.js";
 import changePasswordController from "../Controller/changePasswordController.js";
 

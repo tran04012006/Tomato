@@ -1,6 +1,6 @@
 #user_button {
   height: 39;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   color: var(--text-sub);
   background: var(--surface);
@@ -11,6 +11,10 @@
   gap: 9px;
   font-weight: 800;
   font-size: 12px;
+  margin-left: auto;
+  position: absolute;
+  top: 50px;
+  right: 100px;
 }
 
 #user_button:hover {

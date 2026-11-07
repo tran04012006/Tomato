@@ -1,7 +1,3 @@
-import Header from "./pages/Header.jsx";
-import Card from "./pages/Card.jsx";
-import "./styles/pomato.css";
-import "./styles/panel.css";
 import socket from "./socket.js";
 import LoginPage from "../src/pages/LoginPage";
 // import ForgotPassword from "../src/pages/ForgotPassword";
@@ -17,13 +13,11 @@ const App = () => {
   const { user, loading } = useApp();
   console.log("user trong app la: ", user);
 
-  if (loading === true) {
-    return <p>Loading...</p>;
+  if (loading) {
+    return <div className="app-loading">Loading...</div>;
   }
   return (
     <>
-      <Header />
-      <Card />
       <Routes>
         {/* register */}
         <Route
