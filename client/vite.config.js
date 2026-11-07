@@ -1,7 +1,12 @@
+<<<<<<< HEAD
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+=======
+>>>>>>> origin/main
+
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
-// Proxy /api và /socket.io sang backend để cookie JWT hoạt động cùng origin khi dev.
 export default defineConfig({
   plugins: [react()],
   server: {

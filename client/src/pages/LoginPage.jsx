@@ -1,52 +1,70 @@
-import { useState } from 'react';
-import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext.jsx';
-import { errorMessage } from '../api/axios.js';
+import "../styles/AuthLayout.css";
+import axios from "axios";
+import { useState } from "react";
+import { toast } from "react-toastify";
+import AuthLayout from "../components/AuthLayout";
+import "react-toastify/dist/ReactToastify.css";
+import useNavigation from "../hooks/useNavigation.js";
+import { useApp } from "../Context/AppContext.jsx";
+import api from "../api/axios.js";
 
-export default function LoginPage() {
-  const { user, login } = useAuth();
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [busy, setBusy] = useState(false);
-
-  if (user) return <Navigate to="/pomodoro" replace />;
-
-  const submit = async (e) => {
-    e.preventDefault();
-    setError('');
-    setBusy(true);
+function LoginPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+  const { goToMainPage } = useNavigation();
+  const { setUser } = useApp();
+  const { gotoRegisterPage } = useNavigation();
+  const handleLogin = async (email, password) => {
     try {
-      await login(email, password);
-      navigate(location.state?.from || '/pomodoro', { replace: true });
-    } catch (err) {
-      setError(errorMessage(err, 'Đăng nhập thất bại'));
-    } finally {
-      setBusy(false);
+      const res = await api.post("/auth/login", {
+        email,
+        password,
+      });
+      console.log(res.data.message);
+      setMessage(res.data.message);
+
+      if (res.status == 200) {
+        toast.success(res.data.message);
+        console.log(res.data.data.username);
+        setUser(res.data.data);
+        console.log("go to main page");
+        goToMainPage();
+      }
+    } catch (error) {
+      if (
+        error.response?.status == 400 ||
+        error.response?.status == 409 ||
+        error.response?.status == 404 ||
+        error.response?.status == 401
+      )
+        toast.error(error.response?.data?.message);
+      setMessage(error.response?.data?.message);
+
+      if (error.response?.status == 401) {
+        console.log("dieu huong sang register");
+        gotoRegisterPage();
+      }
     }
   };
 
   return (
-    <div className="auth-card pomato-card mx-auto">
-      <h2 className="mb-1">Welcome back 🍅</h2>
-      <p className="text-muted small mb-4">Đăng nhập để tiếp tục hành trình tập trung.</p>
-      {error && <div className="alert alert-danger py-2">{error}</div>}
-      <form onSubmit={submit} className="d-grid gap-3">
-        <div>
-          <label className="form-label fw-bold small" htmlFor="email">Email</label>
-          <input id="email" type="email" className="form-control" value={email} onChange={(e) => setEmail(e.target.value)} required autoComplete="email" />
-        </div>
-        <div>
-          <label className="form-label fw-bold small" htmlFor="password">Mật khẩu</label>
-          <input id="password" type="password" className="form-control" value={password} onChange={(e) => setPassword(e.target.value)} required autoComplete="current-password" />
-        </div>
-        <button className="btn btn-pomato" disabled={busy}>{busy ? 'Đang đăng nhập…' : 'Log in'}</button>
-      </form>
-      <p className="small text-muted mt-3 mb-0">
-        Chưa có tài khoản? <Link to="/register">Đăng ký</Link>
-      </p>
-    </div>
+    <AuthLayout
+      login={true}
+      register={false}
+      forgotPassword={false}
+      forgotPassword_step2={false}
+      kicker="Welcome back, bestie! "
+      title="Ready to grow today?"
+      submit_content="Enter my study space"
+      authSwitch_text="New to the garden? "
+      authSwitch_linkText="Create an account."
+      setMessage={setMessage}
+      setPassword={setPassword}
+      setEmail={setEmail}
+      handle={() => handleLogin(email, password)}
+    />
   );
 }
+
+export default LoginPage;
