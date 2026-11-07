@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 export const AppContext = createContext({});
+import api from "../api/axios.js";
 //children: la nhung component ma no dang boc. Vi du neu AppProvider dang boc header
 // thi children la header
 export const AppProvider = ({ children }) => {
