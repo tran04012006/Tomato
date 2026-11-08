@@ -1,5 +1,7 @@
 import { parse } from "cookie";
 import Message from "../models/Message.js";
+import { verifyToken } from "../middleware/JWTaction.js";
+import UserModel from "../models/UserModel.js";
 const sendRoomCount = (io, roomId) => {
   const count = io.sockets.adapter.rooms.get(roomId)?.size ?? 0;
   // console.log("cap nhat lai count, count = " + count);
@@ -107,15 +109,49 @@ const handleRoomJoin = async (socket, io, { roomId } = {}) => {
 };
 
 export function registerSocket(io) {
+  io.use(async (socket, next) => {
+    try {
+      // 1. Read cookies sent during Socket.IO handshake
+      const cookieHeader = socket.handshake.headers.cookie || "";
+      const cookies = parse(cookieHeader);
+
+      const token = cookies.tokenUser;
+
+      if (!token) {
+        return next(new Error("Not authenticated"));
+      }
+
+      // 2. Verify the JWT
+      const decoded = verifyToken(token);
+
+      if (!decoded?.email) {
+        return next(new Error("Invalid or expired token"));
+      }
+
+      // 3. Find the authenticated user in MongoDB
+      const user = await UserModel.findOne({
+        email: decoded.email,
+        delete: false,
+      });
+
+      if (!user) {
+        return next(new Error("User not found"));
+      }
+
+      // 4. Store verified identity in the Socket.IO session
+      socket.data.user = {
+        id: String(user._id),
+        name: user.username,
+      };
+
+      next();
+    } catch (error) {
+      console.error("Socket authentication error:", error);
+      next(new Error("Authentication failed"));
+    }
+  });
   io.on("connection", (socket) => {
     // console.log("Client connected:", socket.id);
-
-    // Temporary guest user
-    socket.data.user = {
-      id: socket.id,
-      name: "Guest",
-    };
-
     // Handle chat
     socket.on("chat:send", (data) => {
       handleChatSend(socket, io, data);
