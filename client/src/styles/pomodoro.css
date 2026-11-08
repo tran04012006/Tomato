@@ -1,0 +1,103 @@
+    .pomo-modes {
+      display: flex;
+      gap: 4px;
+      background: var(--surface);
+      border-radius: 999px;
+      padding: 4px;
+      align-self: center;
+      border: 1.5px solid var(--border-dim);
+    }
+    .mode-btn {
+      padding: 6px 18px;
+      border-radius: 999px;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-family: 'Nunito', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .mode-btn:hover { color: var(--red); }
+    .mode-btn.active 
+    { 
+      background: var(--red); 
+      color: #fff; 
+      box-shadow: 0 2px 8px rgba(212,69,58,0.3); 
+    }
+
+    .ring-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      width: 220px; height: 220px;
+      align-self: center;
+    }
+    #timer-svg { position: absolute; transform: rotate(-90deg); }
+    .timer-inner {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 4px; position: relative; z-index: 1;
+    }
+    #timer-display {
+      font-family: 'Baloo 2', cursive;
+      font-size: 58px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1;
+      letter-spacing: -2px;
+    }
+    #timer-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .pomo-controls {
+      display: flex; align-items: center; justify-content: center; gap: 16px;
+    }
+    .ctrl-btn {
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border);
+      background: var(--surface);
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s;
+    }
+    .ctrl-btn:hover { color: var(--red); border-color: var(--red); background: var(--red-light); }
+    .play-btn {
+      width: 66px; height: 66px;
+      border-radius: 50%; border: none;
+      background: var(--red); color: #fff;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 6px 20px rgba(212,69,58,0.35), 0 2px 6px rgba(212,69,58,0.2);
+      transition: all 0.15s;
+    }
+    .play-btn:hover { background: var(--red-hover); transform: scale(1.04); }
+    .play-btn:active { transform: scale(0.94); }
+    .session-count {
+      width: 42px; height: 42px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Nunito', sans-serif;
+      font-size: 12px; font-weight: 700;
+      color: var(--text-dim);
+    }
+
+    .session-dots { display: flex; gap: 8px; justify-content: center; }
+    .dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--surface2);
+      transition: background 0.3s, transform 0.2s;
+    }
+    .dot.filled { background: var(--red); transform: scale(1.15); }
+
+    .pomo-tip {
+      text-align: center; font-size: 13px; color: var(--text-muted);
+      line-height: 1.6; font-weight: 600;
+    }
