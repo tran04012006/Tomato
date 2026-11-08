@@ -1,0 +1,131 @@
+/* ========================================
+   HEADER COMPONENT - SCOPED CSS
+   ======================================== */
+
+/* Component-specific variables */
+.header {
+  --bg: #fff8f5;
+  --card: #ffffff;
+  --surface: #fff1ec;
+  --surface2: #ffe4db;
+  --red: #d4453a;
+  --red-hover: #bf3a30;
+  --red-light: rgba(212, 69, 58, 0.1);
+  --red-border: rgba(212, 69, 58, 0.18);
+  --green: #4a8c52;
+  --green-light: rgba(74, 140, 82, 0.12);
+  --text: #2c1a17;
+  --text-sub: #6b3d36;
+  --text-muted: #9e6b63;
+  --text-dim: #c4a09a;
+  --border: rgba(212, 69, 58, 0.14);
+  --border-dim: rgba(212, 69, 58, 0.08);
+  --shadow: 0 4px 24px rgba(180, 60, 50, 0.1);
+
+  /* Header layout */
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto 32px;
+  padding: 0;
+
+  text-align: center;
+  color: var(--text);
+  font-family: "Nunito", sans-serif;
+}
+
+/* Box-sizing only inside Header */
+.header *,
+.header *::before,
+.header *::after {
+  box-sizing: border-box;
+}
+
+/* Typography only inside Header */
+.header h1,
+.header h2,
+.header h3 {
+  font-family: "Baloo 2", cursive;
+}
+
+/* Logo */
+.header .logo-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.header .logo-tomato {
+  width: 44px;
+  height: 44px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header .logo-tomato svg {
+  width: 44px;
+  height: 44px;
+}
+
+.header .brand-name {
+  font-family: "Baloo 2", cursive;
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--red);
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+
+/* Header title */
+.header h1 {
+  margin: 0;
+  font-size: clamp(22px, 4.5vw, 32px);
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.3;
+}
+
+.header h1 em {
+  color: var(--red);
+  font-style: normal;
+}
+
+/* Header description */
+.header p {
+  margin: 8px 0 0;
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+
+/* Tags container */
+.header .header-tags {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+/* Tags */
+.header .tag {
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.header .tag-red {
+  background: var(--red-light);
+  color: var(--red);
+}
+
+.header .tag-green {
+  background: var(--green-light);
+  color: var(--green);
+}

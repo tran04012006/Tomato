@@ -1,3 +1,7 @@
+import Header from "../pages/Header.jsx";
+import Card from "../pages/Card.jsx";
+import "../styles/pomato.css";
+import "../styles/panel.css";
 import "../styles/MainPage.css";
 import useNavigation from "../hooks/useNavigation.js";
 import { useApp } from "../Context/AppContext.jsx";
@@ -16,6 +20,9 @@ const userButton = () => {
         </span>
         <span id="user_button_name">{user?.username || "Guest"}</span>
       </button>
+      {/* panel */}
+      <Header />
+      <Card />
     </>
   );
 };

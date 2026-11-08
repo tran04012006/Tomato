@@ -1,3 +1,4 @@
+import socket from "./socket.js";
 import LoginPage from "../src/pages/LoginPage";
 // import ForgotPassword from "../src/pages/ForgotPassword";
 import MainPage from "./pages/MainPage.jsx";
@@ -12,8 +13,8 @@ const App = () => {
   const { user, loading } = useApp();
   console.log("user trong app la: ", user);
 
-  if (loading === true) {
-    return <p>Loading...</p>;
+  if (loading) {
+    return <div className="app-loading">Loading...</div>;
   }
   return (
     <Routes>
@@ -22,6 +23,10 @@ const App = () => {
         path="/auth/register"
         element={user ? <Navigate to="/" replace /> : <RegisterPage />}
       />{" "}
+      <Route
+        path="/"
+        element={user ? <MainPage /> : <Navigate to="/auth/register" replace />}
+      />
       {/* login */}
       <Route
         path="/auth/login"
@@ -33,10 +38,6 @@ const App = () => {
         element={user ? <MainPage /> : <Navigate to="/auth/login" replace />}
       />
       <Route path="/profile" element={<Profile />} />
-      <Route
-        path="/"
-        element={user ? <MainPage /> : <Navigate to="/auth/register" replace />}
-      />
     </Routes>
   );
 };

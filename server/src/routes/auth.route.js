@@ -3,8 +3,6 @@ import registerPostController from "../Controller/registerPostController.js";
 import {
   registerValidate,
   loginValidate,
-  ForgotPasswordValidate,
-  // ForgotPasswordOTPValidate,
 } from "../middleware/userValidate.middleware.js";
 import loginController from "../Controller/loginController.js";
 import getUser from "../middleware/getUser.middleware.js";
@@ -51,7 +49,6 @@ import sendRes from "../../helpers/sendRes.js";
  *         description: Internal server error
  */
 const router = express.Router();
-import sendRes from "../../helpers/sendRes.js";
 import updateProfileController from "../Controller/updateProfileController.js";
 import changePasswordController from "../Controller/changePasswordController.js";
 

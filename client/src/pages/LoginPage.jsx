@@ -17,10 +17,16 @@ function LoginPage() {
   const { gotoRegisterPage } = useNavigation();
   const handleLogin = async (email, password) => {
     try {
-      const res = await api.post("/auth/login", {
-        email,
-        password,
-      });
+      const res = await api.post(
+        "/auth/login",
+        {
+          email: email,
+          password: password,
+        },
+        {
+          withCredentials: true,
+        },
+      );
       console.log(res.data.message);
       setMessage(res.data.message);
 
