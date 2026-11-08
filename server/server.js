@@ -24,23 +24,16 @@ const {
   JWT_SECRET,
   CLIENT_ORIGIN = "http://localhost:5173",
 } = process.env;
-app.use(
-  cors({
-    origin: process.env.CLIENT_ORIGIN || "http://localhost:5173",
-    credentials: true,
-  }),
-);
 
-app.use(express.json({ limit: "10mb" }));
-app.use(cookieParser());
+const allowedOrigins = CLIENT_ORIGIN.split(",").map((origin) => origin.trim());
+
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: CLIENT_ORIGIN,
+    origin: allowedOrigins,
     credentials: true,
   },
 });
-
 registerSocket(io);
 // Swagger Documentation
 // app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
@@ -51,22 +44,6 @@ registerSocket(io);
 //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiJUcmFuIiwiaWF0IjoxNzkzMjA0NjQ1LCJleHAiOjE3OTM4MDk0NDV9.CUSK2hy-5EPofmCSS5Xwb2XriiUZU3nm-kPriOIYCqg",
 // );
 // console.log("decodedData: ", decodedData);
-
-// Swagger Documentation
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
-// Health check
-app.get("/api/health", (req, res) => {
-  res.status(200).json({
-    success: true,
-    message: "Tomato backend is running",
-    database:
-      mongoose.connection.readyState === 1 ? "connected" : "disconnected",
-  });
-});
-
-// API routes
-app.use("/", indexRoute);
 
 // Start backend once
 const startServer = async () => {
