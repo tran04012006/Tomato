@@ -34,7 +34,14 @@ app.use(
 app.use(express.json({ limit: "10mb" }));
 app.use(cookieParser());
 const server = createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: CLIENT_ORIGIN,
+    credentials: true,
+  },
+});
 
+registerSocket(io);
 // Swagger Documentation
 // app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
