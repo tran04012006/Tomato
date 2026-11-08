@@ -1,34 +1,49 @@
-
 import "dotenv/config";
+import express from "express";
+import { createServer } from "http";
+
 import http from "http";
 import { Server } from "socket.io";
 import mongoose from "mongoose";
-
 import app from "./src/app.js";
 import { registerSocket } from "./src/socket/index.js";
 import indexRoute from "./src/routes/index.route.js";
+import auth from "./src/routes/auth.route.js";
+import dotenv from "dotenv";
+import cors from "cors";
+import cookieParser from "cookie-parser";
+import { createJWT, verifyToken } from "./src/middleware/JWTaction.js";
 import { swaggerUi, swaggerSpec } from "./src/config/swagger.js";
+// import { swaggerUi, swaggerSpec } from "./src/config/swagger.js";
 
+dotenv.config();
+const port = process.env.PORT;
 const {
   PORT = 5000,
   MONGO_URI,
   JWT_SECRET,
   CLIENT_ORIGIN = "http://localhost:5173",
 } = process.env;
-
-// Create one HTTP server for Express and Socket.IO
-const server = http.createServer(app);
-
-// Attach Socket.IO to the same HTTP server
-const io = new Server(server, {
-  cors: {
-    origin: CLIENT_ORIGIN,
+app.use(
+  cors({
+    origin: process.env.CLIENT_ORIGIN || "http://localhost:5173",
     credentials: true,
-  },
-});
+  }),
+);
 
-// Register Socket.IO events
-registerSocket(io);
+app.use(express.json({ limit: "10mb" }));
+app.use(cookieParser());
+const server = createServer(app);
+
+// Swagger Documentation
+// app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+// //test jwt
+// // createJWT("Tran");
+// const decodedData = verifyToken(
+//   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiJUcmFuIiwiaWF0IjoxNzkzMjA0NjQ1LCJleHAiOjE3OTM4MDk0NDV9.CUSK2hy-5EPofmCSS5Xwb2XriiUZU3nm-kPriOIYCqg",
+// );
+// console.log("decodedData: ", decodedData);
 
 // Swagger Documentation
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
@@ -39,9 +54,7 @@ app.get("/api/health", (req, res) => {
     success: true,
     message: "Tomato backend is running",
     database:
-      mongoose.connection.readyState === 1
-        ? "connected"
-        : "disconnected",
+      mongoose.connection.readyState === 1 ? "connected" : "disconnected",
   });
 });
 

@@ -17,32 +17,28 @@ const App = () => {
     return <div className="app-loading">Loading...</div>;
   }
   return (
-    <>
-      <Routes>
-        {/* register */}
-        <Route
-          path="/auth/register"
-          element={user ? <Navigate to="/" replace /> : <RegisterPage />}
-        />{" "}
-        {/* login */}
-        <Route
-          path="/auth/login"
-          element={user ? <Navigate to="/" replace /> : <LoginPage />}
-        />
-        {/* main page */}
-        <Route
-          path="/"
-          element={user ? <MainPage /> : <Navigate to="/auth/login" replace />}
-        />
-        <Route path="/profile" element={<Profile />} />
-        <Route
-          path="/"
-          element={
-            user ? <MainPage /> : <Navigate to="/auth/register" replace />
-          }
-        />
-      </Routes>
-    </>
+    <Routes>
+      {/* register */}
+      <Route
+        path="/auth/register"
+        element={user ? <Navigate to="/" replace /> : <RegisterPage />}
+      />{" "}
+      <Route
+        path="/"
+        element={user ? <MainPage /> : <Navigate to="/auth/register" replace />}
+      />
+      {/* login */}
+      <Route
+        path="/auth/login"
+        element={user ? <Navigate to="/" replace /> : <LoginPage />}
+      />
+      {/* main page */}
+      <Route
+        path="/"
+        element={user ? <MainPage /> : <Navigate to="/auth/login" replace />}
+      />
+      <Route path="/profile" element={<Profile />} />
+    </Routes>
   );
 };
 

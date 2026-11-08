@@ -3,8 +3,6 @@ import registerPostController from "../Controller/registerPostController.js";
 import {
   registerValidate,
   loginValidate,
-  ForgotPasswordValidate,
-  // ForgotPasswordOTPValidate,
 } from "../middleware/userValidate.middleware.js";
 import loginController from "../Controller/loginController.js";
 import getUser from "../middleware/getUser.middleware.js";
