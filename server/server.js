@@ -65,13 +65,11 @@ const startServer = async () => {
       );
 
       console.log("Port:", PORT);
-
-      console.log(
-        "Backend URL:",
-        isProduction
-          ? "https://tomato-backend-s8ou.onrender.com"
-          : `http://localhost:${PORT}`,
-      );
+      const backendURL = isProduction
+        ? process.env.RENDER_EXTERNAL_URL || "Production URL not configured"
+        : `http://localhost:${PORT}`;
+        
+      console.log("Backend URL:", backendURL);
 
       console.log("Allowed frontend origins:", allowedOrigins);
     });
