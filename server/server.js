@@ -58,7 +58,22 @@ const startServer = async () => {
 
     // Start HTTP server once
     server.listen(PORT, () => {
-      console.log(`Server running at http://localhost:${PORT}`);
+      const isProduction = process.env.NODE_ENV === "production";
+      console.log(
+        "Environment:",
+        isProduction ? "PRODUCTION (Render)" : "DEVELOPMENT (Localhost)",
+      );
+
+      console.log("Port:", PORT);
+
+      console.log(
+        "Backend URL:",
+        isProduction
+          ? "https://tomato-backend-s8ou.onrender.com"
+          : `http://localhost:${PORT}`,
+      );
+
+      console.log("Allowed frontend origins:", allowedOrigins);
     });
 
     server.on("error", (error) => {

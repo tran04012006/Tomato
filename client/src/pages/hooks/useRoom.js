@@ -100,8 +100,6 @@ export default function useRoom(roomId, user) {
     //-------------start the connection
     if (socket.connected) {
       handleConnect();
-    } else {
-      socket.connect();
     }
     //---------------return
     return () => {
@@ -114,7 +112,6 @@ export default function useRoom(roomId, user) {
       socket.off("room:error", handleRoomError);
       socket.off("room:count", handleRoomCount);
       socket.off("room:history", handleRoomHistory);
-      socket.disconnect();
     };
   }, [roomId]);
 
