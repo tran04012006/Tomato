@@ -38,16 +38,11 @@ export default function useRooms() {
 
     if (socket.connected) {
       handleConnect();
-    } else {
-      socket.connect();
     }
-
     return () => {
       socket.off("connect", handleConnect);
       socket.off("room:count", handleRoomCount);
       socket.off("rooms:counts", handleRoomsCounts);
-
-      socket.disconnect();
     };
   }, []);
 

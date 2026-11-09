@@ -4,13 +4,18 @@ import NameBar from "./study/NameBar";
 import RoomPicker from "./study/PickRoom";
 import Room from "./study/Room";
 
-
 export default function StudyTogether() {
   const [name, setName] = useState("");
   const [showHint, setShowHint] = useState(false);
   const [roomId, setRoomId] = useState(null);
   const [userId] = useState(() => crypto.randomUUID());
+  useEffect(() => {
+    socket.connect();
 
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
   const handleNameChange = (value) => {
     setName(value);
     if (value.trim()) setShowHint(false);
