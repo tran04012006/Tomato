@@ -117,6 +117,10 @@ export function registerSocket(io) {
 
       const token = cookies.tokenUser;
 
+      console.log("Origin:", socket.handshake.headers.origin);
+      console.log("Cookie received:", Boolean(cookieHeader));
+      console.log("Token received:", Boolean(cookies.tokenUser));
+
       if (!token) {
         return next(new Error("Not authenticated"));
       }

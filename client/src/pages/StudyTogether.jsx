@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import socket from "../socket";
+
 import "../styles/study.css";
 import NameBar from "./study/NameBar";
 import RoomPicker from "./study/PickRoom";
@@ -9,6 +11,7 @@ export default function StudyTogether() {
   const [showHint, setShowHint] = useState(false);
   const [roomId, setRoomId] = useState(null);
   const [userId] = useState(() => crypto.randomUUID());
+
   useEffect(() => {
     socket.connect();
 
@@ -16,6 +19,7 @@ export default function StudyTogether() {
       socket.disconnect();
     };
   }, []);
+
   const handleNameChange = (value) => {
     setName(value);
     if (value.trim()) setShowHint(false);
@@ -40,9 +44,8 @@ export default function StudyTogether() {
 
   return (
     <div className="panel">
-      {/* <div className="section-label">Choose your study room</div> */}
-      {/* <NameBar name={name} onChange={handleNameChange} showHint={showHint} /> */}
       <RoomPicker onJoin={handleJoin} />
+
       <div className="study-banner">
         🌱 Tomatoes grow better planted together — and so do you!
       </div>
