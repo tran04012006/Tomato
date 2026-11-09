@@ -30,7 +30,7 @@ const loginController = async (req, res) => {
       };
 
       const token = createJWT(payload);
-
+      const isProduction = process.env.NODE_ENV === "production";
       res.cookie("tokenUser", token, {
         httpOnly: true,
         secure: isProduction,
