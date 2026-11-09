@@ -109,17 +109,17 @@ const handleRoomJoin = async (socket, io, { roomId } = {}) => {
 };
 
 export function registerSocket(io) {
+  console.log("go to registerSocket");
   io.use(async (socket, next) => {
     try {
+      console.log("go to try");
       // 1. Read cookies sent during Socket.IO handshake
       const cookieHeader = socket.handshake.headers.cookie || "";
       const cookies = parse(cookieHeader);
-
+      console.log("cookies: ", cookies);
       const token = cookies.tokenUser;
 
-      console.log("Origin:", socket.handshake.headers.origin);
-      console.log("Cookie received:", Boolean(cookieHeader));
-      console.log("Token received:", Boolean(cookies.tokenUser));
+      console.log("token: ", token);
 
       if (!token) {
         return next(new Error("Not authenticated"));
