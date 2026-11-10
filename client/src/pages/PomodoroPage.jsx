@@ -3,6 +3,7 @@ import "../styles/pomodoro.css";
 import ModeSwitch from "./pomodoro/ModeSwitch";
 import TimerRing from "./pomodoro/TimerRing";
 import Controls from "./pomodoro/Controls";
+import PomoInfo from "./pomodoro/PomoInfo";
 import { DURATIONS, MODE_LABELS, MODE_COLORS } from "./pomodoro/constants";
 
 export default function Pomodoro() {
@@ -72,7 +73,12 @@ export default function Pomodoro() {
         onToggle={toggleTimer}
         onReset={resetTimer}
       />
+
+      <PomoInfo mode={mode} />
+      
     </div>
+
+    
 
       
   );
