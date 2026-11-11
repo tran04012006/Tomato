@@ -10,7 +10,7 @@ export default function TodoItem({ todo, onToggle, onDelete }) {
         onChange={() => onToggle(todo.id)}
       />
       <span className={todo.done ? "todo-text done" : "todo-text"}>
-        {todo.text}
+        {todo.task}
       </span>
       <span className="todo-date">{todo.date}</span>
       <button className="del-btn" onClick={() => onDelete(todo.id)}>
