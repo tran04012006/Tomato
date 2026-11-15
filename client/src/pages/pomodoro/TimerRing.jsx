@@ -12,11 +12,12 @@ export default function TimerRing({ timeLeft, totalTime, color, label }) {
   const offset = CIRCUMFERENCE * (1 - progress);
 
   return (
-    <div className="timer-ring">
-      <svg width="200" height="200" viewBox="0 0 200 200">
+    <div className="ring-wrap">
+      <svg id="timer-svg" width="220" height="220" viewBox="0 0 220 220">
+        {/* Vòng nền */}
         <circle
-          cx="100"
-          cy="100"
+          cx="110"
+          cy="110"
           r="88"
           fill="none"
           stroke="#f0e0dc"
@@ -25,8 +26,8 @@ export default function TimerRing({ timeLeft, totalTime, color, label }) {
 
         {/* Vòng màu chạy theo thời gian */}
         <circle
-          cx="100"
-          cy="100"
+          cx="110"
+          cy="110"
           r="88"
           fill="none"
           stroke={color}
@@ -34,16 +35,15 @@ export default function TimerRing({ timeLeft, totalTime, color, label }) {
           strokeLinecap="round"
           strokeDasharray={CIRCUMFERENCE}
           strokeDashoffset={offset}
-          transform="rotate(-90 100 100)"
-          style={{ transition: "stroke-dashoffset 1s linear" }}
+          style={{ transition: "stroke-dashoffset 1s linear, stroke 0.3s" }}
         />
       </svg>
 
-      <div className="timer-text">
-        <div className="timer-display">
+      <div className="timer-inner">
+        <div id="timer-display">
           {minutes}:{seconds}
         </div>
-        <div className="timer-label">{label}</div>
+        <div id="timer-label">{label}</div>
       </div>
     </div>
   );
