@@ -23,10 +23,6 @@ const App = () => {
         path="/auth/register"
         element={user ? <Navigate to="/" replace /> : <RegisterPage />}
       />{" "}
-      <Route
-        path="/"
-        element={user ? <MainPage /> : <Navigate to="/auth/register" replace />}
-      />
       {/* login */}
       <Route
         path="/auth/login"
