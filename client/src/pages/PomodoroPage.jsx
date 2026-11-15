@@ -57,7 +57,7 @@ export default function Pomodoro() {
   }
 
   return (
-    <div className="panel">
+    <div className="panel active">
       <ModeSwitch mode={mode} onChange={handleModeChange} />
 
       <TimerRing
@@ -74,12 +74,19 @@ export default function Pomodoro() {
         onReset={resetTimer}
       />
 
+      <div className="session-dots">
+        {[0, 1, 2, 3].map((i) => (
+          <span key={i} className={`dot ${i < sessions % 4 ? "filled" : ""}`} />
+        ))}
+      </div>
+
+
       <PomoInfo mode={mode} />
-      
+
     </div>
 
-    
 
-      
+
+
   );
 }
