@@ -104,6 +104,19 @@ const Profile = () => {
 
         <div className="section-label profile_section">Your stats</div>
         <ProfileGrid />
+        
+         {isEditing && (
+          <ProfileEditForm
+            user={{
+              ...user,
+              name: user.username ?? "",
+              email: user.email ?? "",
+              avatar: user.avatar ?? "",
+            }}
+            onSave={handleSaveProfile}
+            onCancel={() => setIsEditing(false)}
+          />
+        )}
 
         {isEditing === false && (
           <div className="profile_actions">
