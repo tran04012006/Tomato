@@ -2,6 +2,7 @@ import { useState } from "react";
 import AddTask from "./todo/AddTask";
 import TodoItem from "./todo/TodoItem";
 import TodoFilter from "./todo/TodoFilter";
+import "../styles/todo.css";
 
 export default function Todo() {
   const [todo, setTodo] = useState([]); //array các task rỗng
