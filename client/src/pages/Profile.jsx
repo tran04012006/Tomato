@@ -102,29 +102,21 @@ const Profile = () => {
           </div>
         </div>
 
-        <div></div>
+        <div className="section-label profile_section">Your stats</div>
         <ProfileGrid />
 
-        {isEditing && (
-          <ProfileEditForm
-            user={{
-              ...user,
-              name: user.username ?? "",
-              email: user.email ?? "",
-              avatar: user.avatar ?? "",
-            }}
-            onSave={handleSaveProfile}
-            onCancel={() => setIsEditing(false)}
-          />
-        )}
-
-        <div className="profile_actions">
-          {isEditing === false && (
+        {isEditing === false && (
+          <div className="profile_actions">
+            <button id="log_out" onClick={handleLogout}>
+              Log out
+            </button>
             <button id="profile_edit_button" onClick={handleEditProfile}>
               Edit profile
             </button>
-          )}
-        </div>
+          </div>
+        )}
+
+
 
       </div>
     </>

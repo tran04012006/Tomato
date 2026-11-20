@@ -364,3 +364,35 @@
   margin: 0;                        /* bỏ các margin cũ đang làm lệch */
 }
 
+/* ===== Profile polish ===== */
+#profile_card {
+  width: min(760px, calc(100% - 32px));
+  min-height: 0;                     /* bỏ khoảng trắng dưới */
+}
+
+#profile_cover {
+  height: 150px;
+  padding: 22px 36px;
+}
+
+#profile_cover h1 {
+  margin: 0;
+  color: #fff;                       /* chữ trắng trên nền đỏ */
+  font-family: "Baloo 2", cursive;
+  font-size: 28px;
+  font-weight: 800;
+}
+
+#profile_identity {
+  align-items: flex-end;             /* tên căn theo đáy avatar */
+  margin-top: -30px;                 /* avatar kéo lên ít hơn → tên nằm hẳn dưới nền đỏ */
+  margin-bottom: 24px;
+}
+
+#profile_name {
+  padding: 0 0 4px;
+}
+
+.profile_section {
+  margin: 0 36px;
+}
