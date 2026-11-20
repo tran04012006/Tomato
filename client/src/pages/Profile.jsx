@@ -105,11 +105,6 @@ const Profile = () => {
         <div></div>
         <ProfileGrid />
 
-        {isEditing === false && (
-          <button id="profile_edit_button" onClick={handleEditProfile}>
-            Edit profile
-          </button>
-        )}
         {isEditing && (
           <ProfileEditForm
             user={{
@@ -122,9 +117,15 @@ const Profile = () => {
             onCancel={() => setIsEditing(false)}
           />
         )}
-        <button id="log_out" onClick={handleLogout}>
-          Log out
-        </button>
+
+        <div className="profile_actions">
+          {isEditing === false && (
+            <button id="profile_edit_button" onClick={handleEditProfile}>
+              Edit profile
+            </button>
+          )}
+        </div>
+
       </div>
     </>
   );

@@ -350,3 +350,17 @@
     transition: none;
   }
 }
+
+
+.profile_actions {
+  display: flex;
+  justify-content: space-between;   /* Log out bên trái, Edit profile bên phải */
+  align-items: center;
+  margin: 24px 36px 0;
+}
+
+.profile_actions #log_out,
+.profile_actions #profile_edit_button {
+  margin: 0;                        /* bỏ các margin cũ đang làm lệch */
+}
+
