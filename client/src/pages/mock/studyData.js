@@ -1,9 +1,9 @@
 export const AVATAR_COLORS = ["#d4453a", "#4a9c5d", "#e0a030", "#5b7fd6", "#9b59b6"];
 
 export const ROOMS = [
-  { id: "r1", name: "Deep Focus", desc: "Im lặng, tập trung tối đa", icon: "🎯", capacity: 4 },
+  { id: "r1", name: "Deep Focus", desc: "Im lặng, tập trung tối đa", icon: "🎯", capacity: 6 },
   { id: "r2", name: "Chill Study", desc: "Vừa học vừa trò chuyện nhẹ", icon: "☕", capacity: 6 },
-  { id: "r3", name: "Exam Sprint", desc: "Ôn thi nước rút", icon: "🔥", capacity: 2 },
+  { id: "r3", name: "Exam Sprint", desc: "Ôn thi nước rút", icon: "🔥", capacity: 6 },
 ];
 
 export const USERS = [
