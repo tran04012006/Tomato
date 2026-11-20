@@ -9,7 +9,7 @@ import api from "../api/axios.js";
 import axios from "axios";
 const Profile = () => {
   //thong tin nguoi dung hien tai
-  const { gotoLoginPage } = useNavigation();
+  const { gotoLoginPage, goToMainPage } = useNavigation();
   //trang thai edit hay ko
   const [isEditing, setIsEditing] = useState(false);
 
@@ -34,6 +34,7 @@ const Profile = () => {
   const handleCancel = () => {
     setIsEditing(false);
   };
+
 
   const handleSaveProfile = async (updatedData) => {
     try {
@@ -78,12 +79,17 @@ const Profile = () => {
 
   const initials = user.name ? user.name : "G";
 
+
   return (
     <>
       <div id="profile_card">
         <div id="profile_cover">
+          <button className="leave-btn profile_back" onClick={goToMainPage}>
+            ← Back
+          </button>
           <h1>User information</h1>
         </div>
+
         <div id="profile_identity">
           <div className="profile-avatar">
             {user?.avatar ? (
@@ -104,8 +110,8 @@ const Profile = () => {
 
         <div className="section-label profile_section">Your stats</div>
         <ProfileGrid />
-        
-         {isEditing && (
+
+        {isEditing && (
           <ProfileEditForm
             user={{
               ...user,
