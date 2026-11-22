@@ -4,3 +4,8 @@
   gap: 20px;
   padding: 24px;
 }
+.panel.active {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
