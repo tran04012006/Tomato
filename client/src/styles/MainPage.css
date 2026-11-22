@@ -34,3 +34,12 @@
   font-size: 11px;
   font-weight: 800;
 }
+
+/* Điện thoại: nút user nằm trên header, căn phải, không đè lên tiêu đề */
+@media (max-width: 768px) {
+  #user_button {
+    position: static;
+    align-self: flex-end;
+    margin-bottom: 12px;
+  }
+}

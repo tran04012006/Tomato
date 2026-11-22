@@ -21,11 +21,9 @@
   min-height: 100vh;
   width: 100%;
   background-image:
-    radial-gradient(
-      circle at 10% 20%,
+    radial-gradient(circle at 10% 20%,
       rgba(212, 69, 58, 0.06),
-      transparent 50%
-    ),
+      transparent 50%),
     radial-gradient(circle at 90% 80%, rgba(74, 140, 82, 0.06), transparent 50%);
 }
 
@@ -317,6 +315,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .pomato-page,
   .pomato-page *,
   .pomato-page *::before,
@@ -324,4 +323,56 @@
     transition: none !important;
     animation: none !important;
   }
+}
+
+/* Nền */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+
+  /* ===== CHỈNH Ở ĐÂY =====
+     --scene: chiều rộng khung cảnh (mọi file đều là khung 1920x1080).
+       100%  = rộng bằng màn hình, cỏ luôn phủ hết chiều ngang (không giảm dưới 100%).
+       900px = tối thiểu trên điện thoại (hẹp hơn thì cắt bên trái, giữ mèo bên phải).
+     --small: tỉ lệ thu nhỏ cho mèo, cây, mặt trời (1 = bằng cỏ). */
+  --scene: max(100%, 900px);
+  --small: 0.8;
+
+  /* Thứ tự: dòng đầu nằm trên cùng.
+     Thêm/bớt 1 ảnh thì phải thêm/bớt 1 giá trị tương ứng ở size, position, repeat */
+  background-image:
+    url("../assets/images/stupidCat.PNG"),  /* 1. mèo */
+    url("../assets/images/grass.PNG"),      /* 2. cỏ (che gốc cây) */
+    url("../assets/images/pomato-tile.png"), /* 3. cây cà chua (đoạn 4 cây cắt từ pomato.PNG, rộng 657px) */
+    url("../assets/images/cloud.PNG"),      /* 4. mây */
+    url("../assets/images/sun.PNG");        /* 5. mặt trời */
+
+  background-size:
+    calc(var(--scene) * var(--small)) auto,  /* 1. mèo – thu nhỏ */
+    var(--scene) auto,                       /* 2. cỏ */
+    calc(var(--scene) * var(--small) * 657 / 1920) auto,  /* 3. cây – thu nhỏ, cùng tỉ lệ với khung 1920 */
+    var(--scene) auto,                       /* 4. mây – bằng cỏ */
+    calc(var(--scene) * var(--small)) auto;  /* 5. mặt trời – thu nhỏ */
+
+  background-position:
+    right bottom,  /* 1. mèo */
+    right bottom,  /* 2. cỏ */
+    right bottom,  /* 3. cây */
+    right bottom,  /* 4. mây – neo đáy để chân mây khuất sau cỏ */
+    right top;     /* 5. mặt trời – neo đỉnh để không bị cắt */
+
+  background-repeat:
+    no-repeat,  /* 1. mèo */
+    no-repeat,  /* 2. cỏ */
+    repeat-x,   /* 3. cây – lặp ngang lấp chỗ trống bên trái */
+    no-repeat,  /* 4. mây */
+    no-repeat;  /* 5. mặt trời */
+
+  background-color: #E5F1F3; /* màu trời */
+}
+body:has(#main)::before {
+  content: none;
 }

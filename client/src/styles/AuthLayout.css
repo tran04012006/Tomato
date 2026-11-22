@@ -220,3 +220,31 @@ body {
 .recovery.active{
   background-color: var(--red);
 }
+
+/* ===== Responsive ===== */
+/* #root padding 140px làm nội dung trên điện thoại bị bóp còn ~100px */
+@media (max-width: 900px) {
+  #root {
+    padding: 16px;
+  }
+}
+
+/* Form đăng nhập/đăng ký: xếp dọc, ẩn phần quả cà chua trang trí */
+@media (max-width: 768px) {
+  #main {
+    flex-direction: column;
+    border-radius: 28px;
+  }
+
+  #main > div {
+    padding: 32px 22px;
+  }
+
+  #left {
+    border-radius: 28px;
+  }
+
+  #right {
+    display: none;
+  }
+}

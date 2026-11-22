@@ -20,9 +20,10 @@ const userButton = () => {
         </span>
         <span id="user_button_name">{user?.username || "Guest"}</span>
       </button>
+
       {/* panel */}
-      <Header />
-      <Card />
+      <Header />  {/* header */}
+      <Card />    {/* Main content */}
     </>
   );
 };
