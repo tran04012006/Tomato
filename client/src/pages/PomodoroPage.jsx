@@ -5,12 +5,34 @@ import TimerRing from "./pomodoro/TimerRing";
 import Controls from "./pomodoro/Controls";
 import PomoInfo from "./pomodoro/PomoInfo";
 import { DURATIONS, MODE_LABELS, MODE_COLORS } from "./pomodoro/constants";
+import { createSession, getStats } from "./api/pomodoro";
+
 
 export default function Pomodoro() {
   const [mode, setMode] = useState("focus"); // mode hiện tại
   const [timeLeft, setTimeLeft] = useState(DURATIONS.focus); // số giây còn lại
   const [isRunning, setIsRunning] = useState(false); // đang chạy hay đang dừng
   const [sessions, setSessions] = useState(0); // số phiên focus đã xong
+
+
+  // Khi mở trang: lấy stats từ server
+  useEffect(() => {
+    getStats()
+      .then((res) => setSessions(res.data.data.focusSessions))
+      .catch((err) => console.error(err));
+  }, []);
+
+  // Khi hết giờ thì dừng lại, nếu là Focus thì cộng 1 phiên + lưu lên server
+  useEffect(() => {
+    if (timeLeft > 0) return;
+
+    setIsRunning(false);
+    if (mode === "focus") {
+      setSessions((prev) => prev + 1);
+      createSession(DURATIONS.focus / 60).catch((err) => console.error(err));
+    }
+  }, [timeLeft, mode]);
+
 
   // Khi isRunning = true thì mỗi giây trừ 1 giây
   useEffect(() => {
@@ -24,15 +46,6 @@ export default function Pomodoro() {
     return () => clearInterval(timer);
   }, [isRunning]);
 
-  // Khi hết giờ thì dừng lại, nếu là Focus thì cộng 1 phiên
-  useEffect(() => {
-    if (timeLeft > 0) return;
-
-    setIsRunning(false);
-    if (mode === "focus") {
-      setSessions((prev) => prev + 1);
-    }
-  }, [timeLeft, mode]);
 
   // Đổi mode
   function handleModeChange(newMode) {
