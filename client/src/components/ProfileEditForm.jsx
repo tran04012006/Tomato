@@ -150,49 +150,6 @@ function ProfileEditForm({ user, onSave, onCancel }) {
     <form className="profile_edit_form" onSubmit={handleSubmit}>
       <div className="profile_edit_heading">Update your information</div>
 
-      {/* Avatar editor */}
-      <div className="avatar_editor">
-        <div
-          className="avatar_preview"
-          style={avatar ? { backgroundImage: `url("${avatar}")` } : {}}
-        >
-          {!avatar && getInitials(name)}
-        </div>
-
-        <div className="avatar_editor_copy">
-          <strong>Profile picture</strong>
-          <span>
-            Choose a JPG, PNG, or WebP image. Maximum file size: 5 MB.
-          </span>
-
-          <div className="avatar_editor_actions">
-            <button
-              type="button"
-              className="avatar_upload"
-              onClick={() => fileInputRef.current?.click()}
-            >
-              Choose image
-            </button>
-
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept="image/jpeg,image/png,image/webp"
-              onChange={handleAvatarChange}
-              style={{ display: "none" }}
-            />
-
-            <button
-              type="button"
-              className="avatar_remove"
-              onClick={handleRemoveAvatar}
-            >
-              Remove
-            </button>
-          </div>
-        </div>
-      </div>
-
       {/* Name and email */}
       <div className="profile_edit_grid">
         <div className="auth_field">
