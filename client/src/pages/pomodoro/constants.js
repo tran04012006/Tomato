@@ -1,4 +1,4 @@
-export const DURATIONS = { focus: 25 * 60, short: 5 * 60, long: 15 * 60 };
+export const DURATIONS = { focus: 25 * 60 , short: 5 * 60, long: 15 * 60 };
 
 export const MODE_LABELS = {
     focus: "Focus",

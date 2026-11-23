@@ -1,17 +1,28 @@
 import "../styles/ProfileGrid.css";
+import { useState, useEffect } from "react";
+import { getStats } from "../pages/api/pomodoro";
+
 
 const ProfileGrid = () => {
+  const [pomo, setPomo] = useState({ focusSessions: 0, focusMinutes: 0 });
+
+  useEffect(() => {
+    getStats()
+      .then((res) => setPomo(res.data.data))
+      .catch((err) => console.error("Get pomodoro stats failed:", err));
+  }, []);
+
   const stats = [
     {
       id: 1,
       icon: "🍅",
-      value: 12,
+      value: pomo.focusSessions,
       label: "Focus sessions",
     },
     {
       id: 2,
       icon: "⏱️",
-      value: 300,
+      value: pomo.focusMinutes,
       label: "Focus minutes",
     },
     {
@@ -37,3 +48,4 @@ const ProfileGrid = () => {
 };
 
 export default ProfileGrid;
+
