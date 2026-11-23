@@ -12,7 +12,11 @@ const options = {
     servers: [
       {
         url: "http://localhost:3000",
-        description: "Local development server",
+        description: "Local Development",
+      },
+      {
+        url: "https://tomato-backend-tnwl.onrender.com",
+        description: "Production - Render",
       },
     ],
     components: {
