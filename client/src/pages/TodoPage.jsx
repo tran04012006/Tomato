@@ -1,30 +1,56 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AddTask from "./todo/AddTask";
 import TodoItem from "./todo/TodoItem";
 import TodoFilter from "./todo/TodoFilter";
+import { getTodos, createTodo, updateTodo, deleteTodo } from "./api/todo";
 import "../styles/todo.css";
 
 export default function Todo() {
   const [todo, setTodo] = useState([]); //array các task rỗng
   const [filter, setFilter] = useState("all");
 
-  const addTask = (task) => {
-    setTodo([{ id: Date.now(), task, done: false, date: "Today" }, ...todo]);
-  };
+  // Khi mở trang: lấy todos từ server
+  useEffect(() => {
+    getTodos()
+      .then((res) => setTodo(res.data.data))
+      .catch((err) => console.error(err));
+  }, []);
+
+
+
   //sau khi người dùng nhập task => setTask tạo task và thêm vào array. Mỗi task có id, task, status, date
 
-
-  const toggleTask = (id) => {
-    setTodo(
-      todo.map((todo) =>
-        todo.id === id ? { ...todo, done: !todo.done } : todo //chuyển status nếu đúng id
-      )
-    );
+  const addTask = async (task) => {
+    try {
+      const res = await createTodo(task); //tạo task mới
+      setTodo((prev) => [res.data.data, ...prev]); 
+    } 
+    catch (err) {
+      console.error(err);
+    }
   };
 
-  // giữ lại nếu todo.id != id cần xóa
-  const deleteTask = (id) => {
-    setTodo(todo.filter((todo) => todo.id !== id));
+
+  const toggleTask = async (id) => {
+    try {
+      const current = todo.find((t) => t._id === id);                          // todo đang hiển thị
+      const res = await updateTodo(id, { done: !current.done });               
+      setTodo((prev) => prev.map((t) => (t._id === id ? res.data.data : t)));  
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+
+  const deleteTask = async (id) => {
+    try {
+      const res = await deleteTodo(id);
+      setTodo((prev) => prev.filter((a) => a._id !== id));
+
+    } 
+    catch (err) {
+      console.error(err);
+    }
   };
 
   //"all"=> hiện hết, active => hiện task status chưa hoàn thành 
@@ -72,7 +98,7 @@ export default function Todo() {
         <ul className="todo-list">
           {visibletodo.map((todo) => (
             <TodoItem
-              key={todo.id}
+              key={todo._id}
               todo={todo}
               onToggle={toggleTask}
               onDelete={deleteTask}
