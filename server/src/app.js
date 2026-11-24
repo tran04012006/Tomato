@@ -5,10 +5,12 @@ import indexRoute from "./routes/index.route.js";
 
 const app = express();
 
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://tomato-tawny-eight.vercel.app",
-];
+const allowedOrigins = (
+  process.env.CLIENT_ORIGIN ||
+  "http://localhost:5173,https://tomato-tawny-eight.vercel.app"
+)
+  .split(",")
+  .map((origin) => origin.trim());
 
 app.use(
   cors({
