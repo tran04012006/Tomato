@@ -133,3 +133,16 @@ export const deleteTodo = async (req, res) => {
         return sendRes(res, 500, "Internal server error", null);
     }
 }
+
+export const getTodoStats = async (req, res) => {
+    try {
+        const user = res.locals.user;
+        const doneCount = await Todo.countDocuments({ user: user._id, done: true });
+        return sendRes(res, 200, "get todo stats successfully", { doneCount });
+    }
+    catch (error) {
+        console.error("Get todo stats error:", error);
+
+        return sendRes(res, 500, "Internal server error", null);
+    }
+}

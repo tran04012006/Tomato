@@ -1,15 +1,21 @@
 import "../styles/ProfileGrid.css";
 import { useState, useEffect } from "react";
 import { getStats } from "../pages/api/pomodoro";
+import { getTodoStats } from "../pages/api/todo";
 
 
 const ProfileGrid = () => {
   const [pomo, setPomo] = useState({ focusSessions: 0, focusMinutes: 0 });
+  const [doneCount, setDoneCount] = useState(0);
 
   useEffect(() => {
     getStats()
       .then((res) => setPomo(res.data.data))
       .catch((err) => console.error("Get pomodoro stats failed:", err));
+
+    getTodoStats()
+      .then((res) => setDoneCount(res.data.data.doneCount))
+      .catch((err) => console.error("Get todo stats failed:", err));
   }, []);
 
   const stats = [
@@ -28,7 +34,7 @@ const ProfileGrid = () => {
     {
       id: 3,
       icon: "✅",
-      value: 8,
+      value: doneCount,
       label: "Tasks completed",
     },
   ];
