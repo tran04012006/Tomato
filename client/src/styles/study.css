@@ -1,0 +1,415 @@
+    .room-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .room-status {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 13px;
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .live-dot-wrap {
+      position: relative;
+      width: 10px;
+      height: 10px;
+    }
+
+    .live-dot {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: var(--green);
+    }
+
+    .live-ping {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: var(--green);
+      animation: ping 1.8s ease-out infinite;
+      opacity: 0.6;
+    }
+
+    @keyframes ping {
+      0% {
+        transform: scale(1);
+        opacity: 0.6;
+      }
+
+      100% {
+        transform: scale(2.4);
+        opacity: 0;
+      }
+    }
+
+    .online-count {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    .section-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    .users-list {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .user-row {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 9px 12px;
+      background: var(--surface);
+      border: 1.5px solid var(--border-dim);
+      border-radius: 14px;
+      transition: all 0.2s;
+    }
+
+    .user-row:hover {
+      border-color: var(--red-border);
+    }
+
+    .user-row.you {
+      border-color: rgba(212, 69, 58, 0.3);
+      animation: popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
+    .avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .user-name {
+      flex: 1;
+      font-size: 13px;
+      color: var(--text-sub);
+      font-weight: 600;
+    }
+
+    .user-status {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+
+    .status-text {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .focus-time {
+      font-size: 11px;
+      color: var(--text-dim);
+      font-weight: 700;
+    }
+
+    .chat-box {
+      height: 150px;
+      overflow-y: auto;
+      background: var(--surface);
+      border: 1.5px solid var(--border-dim);
+      border-radius: 14px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      scrollbar-width: none;
+    }
+
+    .chat-box::-webkit-scrollbar {
+      display: none;
+    }
+
+    .chat-msg {
+      font-size: 13px;
+      line-height: 1.5;
+      animation: popIn 0.2s ease forwards;
+    }
+
+    .chat-user {
+      font-weight: 700;
+      margin-right: 5px;
+    }
+
+    .chat-text {
+      color: var(--text-sub);
+      font-weight: 500;
+    }
+
+    .chat-input-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .chat-input {
+      flex: 1;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 9px 14px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .chat-input::placeholder {
+      color: var(--text-dim);
+    }
+
+    .chat-input:focus {
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px rgba(212, 69, 58, 0.1);
+    }
+
+    /* ── Room picker ── */
+    .room-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      background: var(--surface);
+      border: 1.5px solid var(--border-dim);
+      border-radius: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .room-card:hover:not(.full) {
+      border-color: var(--red-border);
+      background: var(--card);
+      box-shadow: var(--shadow);
+    }
+
+    .room-card.full {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .room-card-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .room-card-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .room-card-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .room-card-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 1px;
+      font-weight: 600;
+    }
+
+    .room-card-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+
+    .room-slots {
+      font-size: 12px;
+      font-weight: 700;
+      padding: 2px 9px;
+      border-radius: 999px;
+    }
+
+    .room-slots.open {
+      background: var(--green-light);
+      color: var(--green);
+    }
+
+    .room-slots.full {
+      background: var(--surface2);
+      color: var(--text-dim);
+    }
+
+    .room-pips {
+      display: flex;
+      gap: 3px;
+    }
+
+    .room-pip {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--surface2);
+    }
+
+    .room-pip.on {
+      background: var(--red);
+    }
+
+    .name-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .name-hint {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--red);
+      margin-top: -12px;
+    }
+
+    .room-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .room-header-right { display: flex; align-items: center; gap: 8px; }
+
+.leave-btn {
+  padding: 4px 12px;
+  background: none;
+  border: 1.5px solid var(--border);
+  border-radius: 999px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.leave-btn:hover { border-color: var(--red); color: var(--red); }
+
+.chat { display: flex; flex-direction: column; gap: 8px; }
+.room-header { display: flex; align-items: center; justify-content: space-between; }
+
+.puzzle-pals-card {
+  display: grid;
+  gap: 14px;
+  padding: 16px;
+  background: var(--surface);
+  border: 1.5px solid var(--red-border);
+  border-radius: 16px;
+}
+
+.puzzle-pals-intro {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.puzzle-pals-icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: var(--green-light);
+  font-size: 20px;
+}
+
+.puzzle-pals-intro h2 {
+  margin: 0 0 3px;
+  color: var(--text);
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.puzzle-pals-intro p,
+.puzzle-pals-note {
+  margin: 0;
+  color: var(--text-sub);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.puzzle-pals-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.puzzle-pals-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 155px;
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1.5px solid var(--red-border);
+  border-radius: 12px;
+  background: var(--card);
+  color: var(--red-hover);
+  font-size: 13px;
+  font-weight: 800;
+  text-align: center;
+  text-decoration: none;
+}
+
+.puzzle-pals-link:hover {
+  border-color: var(--red-hover);
+  background: var(--surface2);
+}
+
+.puzzle-pals-link--primary {
+  border-color: transparent;
+  background: var(--red-hover);
+  color: var(--card);
+}
+
+.puzzle-pals-link--primary:hover {
+  border-color: transparent;
+  background: var(--text-sub);
+  color: var(--card);
+}
+
+.puzzle-pals-link:focus-visible {
+  outline: 2px solid var(--red-hover);
+  outline-offset: 2px;
+}
+
+.puzzle-pals-note {
+  padding-top: 10px;
+  border-top: 1px solid var(--red-border);
+  font-size: 12px;
+}

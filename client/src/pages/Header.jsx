@@ -5,7 +5,7 @@ function Header(){
 return (
 <div className="header">
   <div className="logo-row">
-    <span className="brand-name">Pomato</span>
+    <span className="brand-name">Todoro</span>
   </div>
   <h1>Study together, <em>grow together!</em></h1>
   <p>Pomodoro · To-Do List · Study Room — all in one. Because "pomodoro" means tomato! 🍅</p>

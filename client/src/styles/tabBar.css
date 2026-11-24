@@ -27,3 +27,9 @@
       margin-bottom: -1.5px;
     }
     .tab-btn .icon { margin-right: 4px; }
+
+    /* Điện thoại: icon nằm trên chữ để "Study Together" không bị xuống dòng lộn xộn */
+    @media (max-width: 420px) {
+      .tab-btn { padding: 8px 4px; font-size: 12px; line-height: 1.3; }
+      .tab-btn .icon { display: block; margin: 0 0 2px; font-size: 16px; }
+    }

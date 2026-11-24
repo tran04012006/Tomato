@@ -1,27 +1,40 @@
-import express from 'express';
-import cors from 'cors';
-import cookieParser from 'cookie-parser';
-import authRoutes from './routes/auth.js';
-import todoRoutes from './routes/todos.js';
-import roomRoutes from './routes/rooms.js';
+import express from "express";
+import cors from "cors";
+import cookieParser from "cookie-parser";
+import indexRoute from "./routes/index.route.js";
 
 const app = express();
 
-app.use(cors({ origin: process.env.CLIENT_ORIGIN || 'http://localhost:5173', credentials: true }));
-app.use(express.json());
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://tomato-tawny-eight.vercel.app",
+];
+
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  })
+);
+
+app.use(express.json({ limit: "10mb" }));
 app.use(cookieParser());
 
-app.get('/api/health', (_req, res) => res.json({ ok: true }));
-app.use('/api/auth', authRoutes);
-app.use('/api/todos', todoRoutes);
-app.use('/api/rooms', roomRoutes);
+app.get("/api/health", (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: "Tomato backend is running",
+  });
+});
 
-app.use('/api', (_req, res) => res.status(404).json({ message: 'Không tìm thấy API' }));
+app.use("/", indexRoute);
 
-// eslint-disable-next-line no-unused-vars
-app.use((err, _req, res, _next) => {
-  console.error(err);
-  res.status(500).json({ message: 'Lỗi máy chủ' });
+app.use((req, res) => {
+  res.status(404).json({
+    success: false,
+    message: "Route not found",
+  });
 });
 
 export default app;
