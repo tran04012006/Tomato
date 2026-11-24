@@ -6,6 +6,7 @@ import Controls from "./pomodoro/Controls";
 import PomoInfo from "./pomodoro/PomoInfo";
 import { DURATIONS, MODE_LABELS, MODE_COLORS } from "./pomodoro/constants";
 import { createSession, getStats } from "./api/pomodoro";
+import ringSound from "../assets/audio/ring.mp3"
 
 
 export default function Pomodoro() {
@@ -13,7 +14,7 @@ export default function Pomodoro() {
   const [timeLeft, setTimeLeft] = useState(DURATIONS.focus); // số giây còn lại
   const [isRunning, setIsRunning] = useState(false); // đang chạy hay đang dừng
   const [sessions, setSessions] = useState(0); // số phiên focus đã xong
-
+ 
 
   // Khi mở trang: lấy stats từ server
   useEffect(() => {
@@ -27,6 +28,12 @@ export default function Pomodoro() {
     if (timeLeft > 0) return;
 
     setIsRunning(false);
+
+  //thêm tiếng sau khi hết session
+    const sound = new Audio(ringSound);                                    
+    sound.volume = 0.6;                                                            
+    sound.play().catch((err) => console.error("cant play audio:", err));    
+
     if (mode === "focus") {
       setSessions((prev) => prev + 1);
       createSession(DURATIONS.focus / 60).catch((err) => console.error(err));
