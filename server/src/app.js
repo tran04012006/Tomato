@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import indexRoute from "./routes/index.route.js";
-
+import { swaggerUi, swaggerSpec } from "./config/swagger.js";
 const app = express();
 
 const allowedOrigins = (
@@ -31,7 +31,7 @@ app.get("/api/health", (req, res) => {
 });
 
 app.use("/", indexRoute);
-
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use((req, res) => {
   res.status(404).json({
     success: false,
